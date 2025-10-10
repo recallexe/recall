@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Bell,
   LogOut,
@@ -23,17 +23,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
+import { SidebarTrigger } from "./ui/sidebar";
 
 export default function Navbar() {
-    const { setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <nav className="p-4 flex items-center justify-between">
       {/* LEFT */}
       <div className="flex items-center gap-4">
-        <Button variant="outline">
-          <PanelRight />
-        </Button>
+        <SidebarTrigger variant="outline" className="py-4 px-5" />
         <Button variant="outline">
           <Search />
           Search Anything
