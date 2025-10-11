@@ -25,13 +25,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { SidebarTrigger } from "./ui/sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "./ui/breadcrumb";
 
 export default function Navbar() {
   const { setTheme } = useTheme();
@@ -40,7 +33,7 @@ export default function Navbar() {
     <nav className="p-4 flex items-center justify-between">
       {/* LEFT */}
       <Button variant="outline" size="icon" asChild>
-        <SidebarTrigger variant="outline" size="icon" />
+        <SidebarTrigger/>
       </Button>
       {/* RIGHT */}
       <div className="flex items-center gap-2">
