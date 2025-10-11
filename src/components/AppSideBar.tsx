@@ -1,24 +1,6 @@
 "use client";
 import React from "react";
-import {
-  Archive,
-  Box,
-  Calendar,
-  CheckSquare,
-  ChevronDown,
-  Clipboard,
-  Database,
-  LogOut,
-  Folder,
-  LayoutDashboard,
-  Brain,
-  User2,
-  ChevronUp,
-  Settings,
-  CalendarDays,
-  ChevronRight,
-  Plus,
-} from "lucide-react";
+
 import {
   Sidebar,
   SidebarContent,
@@ -34,42 +16,13 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-
-const menu = [
-  { title: "Dashboard", icon: LayoutDashboard, url: "/dashboard" },
-  { title: "Areas", icon: Folder, url: "/dashboard/areas", key: "areas" },
-  { title: "Projects", icon: Box, url: "/dashboard/projects", key: "projects" },
-  { title: "Tasks", icon: CheckSquare, url: "/dashboard/tasks", key: "tasks" },
-  { title: "Notes", icon: Clipboard, url: "/dashboard/notes", key: "notes" },
-  { title: "Events", icon: Calendar, url: "/dashboard/events", key: "events" },
-  {
-    title: "Resources",
-    icon: Database,
-    url: "/dashboard/resources",
-    key: "resources",
-  },
-  { title: "Calendar", icon: CalendarDays, url: "/dashboard/calendar" },
-  { title: "Archive", icon: Archive, url: "/dashboard/archive" },
-];
-
-const sample = {
-  areas: ["Personal", "Work", "Learning"],
-  projects: ["Recall Redesign", "Thesis", "Open Source"],
-  tasks: ["Inbox Zero", "Plan Sprint", "Buy Groceries"],
-  notes: ["Meeting notes", "Ideas", "Reading summary"],
-  events: ["Doctor", "Team sync", "Conference"],
-  resources: ["Articles", "Books", "Databases"],
-};
+import { NavUser } from "./nav-user";
+import { menu, sample, user } from "@/app/lib/data";
+import { Brain, ChevronRight } from "lucide-react";
 
 export default function AppSidebar() {
   return (
@@ -142,31 +95,7 @@ export default function AppSidebar() {
 
       {/* SIDEBAR FOOTER */}
       <SidebarFooter className="p-4">
-        <SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton>
-                <User2 />
-                Ehsanulla Dehzad
-                <ChevronUp className="ml-auto" />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <User2 />
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings />
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem variant="destructive">
-                <LogOut />
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </SidebarMenuItem>
+        <NavUser user={user}/>
       </SidebarFooter>
     </Sidebar>
   );
