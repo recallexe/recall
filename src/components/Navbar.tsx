@@ -9,6 +9,7 @@ import {
   Plus,
   Search,
   Settings,
+  SlashIcon,
   Sun,
   User2,
 } from "lucide-react";
@@ -24,6 +25,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { SidebarTrigger } from "./ui/sidebar";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "./ui/breadcrumb";
 
 export default function Navbar() {
   const { setTheme } = useTheme();
@@ -31,28 +33,24 @@ export default function Navbar() {
   return (
     <nav className="p-4 flex items-center justify-between">
       {/* LEFT */}
-      <div className="flex items-center gap-4">
-        <SidebarTrigger variant="outline" className="py-4 px-5" />
-        <Button variant="outline">
-          <Search />
-          Search Anything
+        <Button variant="outline" size="icon">
+          <SidebarTrigger />
         </Button>
-      </div>
-
       {/* RIGHT */}
-      <div className="flex items-center gap-4">
-        <Button variant="outline">
+      <div className="flex items-center gap-2">
+        <Button variant="outline" size="icon">
+          <Search />
+        </Button>
+        <Button variant="outline" size="icon">
           <Plus />
-          New
         </Button>
-        <Button variant="outline">
+        <Button variant="outline" size="icon">
           <Network />
-          Knowledge Graph
         </Button>
-        <Button variant="outline">
+        <Button variant="outline" size="icon">
           <MessageSquare />
         </Button>
-        <Button variant="outline">
+        <Button variant="outline" size="icon">
           <Bell />
         </Button>
         {/* THEME MENU */}
@@ -80,8 +78,8 @@ export default function Navbar() {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src="profile-pic.jpg" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src="/profile-pic.jpg" />
+              <AvatarFallback>ED</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent sideOffset={10}>

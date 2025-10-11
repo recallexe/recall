@@ -17,6 +17,7 @@ import {
   Settings,
   CalendarDays,
   ChevronRight,
+  Plus,
 } from "lucide-react";
 import {
   Sidebar,
@@ -26,34 +27,39 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuAction,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import Image from "next/image";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./ui/collapsible";
+} from "@/components/ui/collapsible";
 
 const menu = [
-  { title: "Dashboard", icon: LayoutDashboard, url: "#" },
-  { title: "Areas", icon: Folder, url: "#", key: "areas" },
-  { title: "Projects", icon: Box, url: "#", key: "projects" },
-  { title: "Tasks", icon: CheckSquare, url: "#", key: "tasks" },
-  { title: "Notes", icon: Clipboard, url: "#", key: "notes" },
-  { title: "Events", icon: Calendar, url: "#", key: "events" },
-  { title: "Resources", icon: Database, url: "#", key: "resources" },
-  { title: "Calendar", icon: CalendarDays, url: "#" },
-  { title: "Archive", icon: Archive, url: "#" },
+  { title: "Dashboard", icon: LayoutDashboard, url: "/dashboard" },
+  { title: "Areas", icon: Folder, url: "/dashboard/areas", key: "areas" },
+  { title: "Projects", icon: Box, url: "/dashboard/projects", key: "projects" },
+  { title: "Tasks", icon: CheckSquare, url: "/dashboard/tasks", key: "tasks" },
+  { title: "Notes", icon: Clipboard, url: "/dashboard/notes", key: "notes" },
+  { title: "Events", icon: Calendar, url: "/dashboard/events", key: "events" },
+  {
+    title: "Resources",
+    icon: Database,
+    url: "/dashboard/resources",
+    key: "resources",
+  },
+  { title: "Calendar", icon: CalendarDays, url: "/dashboard/calendar" },
+  { title: "Archive", icon: Archive, url: "/dashboard/archive" },
 ];
 
 const sample = {
@@ -70,10 +76,10 @@ export default function AppSidebar() {
     <Sidebar>
       {/* SIDEBAR HEADER */}
       <SidebarHeader>
-        <Link href="/">
+        <Link href="/dashboard">
           <div className="flex items-center gap-2 px-4 pt-4">
-            <Brain size={25} />
-            <span className="text-2xl font-serif">Recall</span>
+            <Brain size={30} />
+            <span className="text-[27px] font-serif">Recall</span>
           </div>
         </Link>
       </SidebarHeader>
@@ -86,23 +92,27 @@ export default function AppSidebar() {
             const hasSubmenu = item.key;
 
             if (hasSubmenu) {
+              const subs = (sample as Record<string, string[]>)[item.key] || [];
               return (
-                <Collapsible
-                  key={item.title}
-        
-                  className="group/collapsible"
-                >
+                <Collapsible key={item.title} className="group/collapsible">
                   <SidebarMenuItem>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton>
+                    {/* label navigates to the page */}
+                    <SidebarMenuButton asChild>
+                      <Link href={item.url}>
                         <Icon />
                         {item.title}
-                        <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                      </SidebarMenuButton>
+                      </Link>
+                    </SidebarMenuButton>
+
+                    {/* chevron only toggles the collapsible */}
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuAction>
+                        <ChevronRight className="transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                      </SidebarMenuAction>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
                       <SidebarMenuSub>
-                        {(sample[(item.key)]).map((subItem) => (
+                        {subs.map((subItem) => (
                           <SidebarMenuSubItem key={subItem}>
                             <SidebarMenuSubButton>
                               {subItem}
