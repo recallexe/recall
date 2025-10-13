@@ -25,35 +25,25 @@ export default function Navbar() {
   return (
     <nav className="p-4 flex items-center justify-between">
       {/* LEFT */}
-      <Button variant="outline" size="icon" asChild>
-        <SidebarTrigger/>
-      </Button>
+      <NavItem icon={<SidebarTrigger />} />
       {/* RIGHT */}
       <div className="flex items-center gap-2">
         <NavItem icon={<Search />} />
-        <Button variant="outline" size="icon">
-          <Search />
-        </Button>
-        <Button variant="outline" size="icon">
-          <Plus />
-        </Button>
-        <Button variant="outline" size="icon">
-          <Network />
-        </Button>
-        <Button variant="outline" size="icon">
-          <MessageSquare />
-        </Button>
-        <Button variant="outline" size="icon">
-          <Bell />
-        </Button>
+        <NavItem icon={<Plus />} />
+        <NavItem icon={<Network />} />
+        <NavItem icon={<MessageSquare />} />
+        <NavItem icon={<Bell />} />
         {/* THEME MENU */}
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
+          <DropdownMenuTrigger>
+            <NavItem
+              icon={
+                <>
+                  <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                </>
+              }
+            />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" sideOffset={10}>
             <DropdownMenuItem onClick={() => setTheme("light")}>
