@@ -1,30 +1,23 @@
 "use client";
 import {
   Bell,
-  LogOut,
   MessageSquare,
   Moon,
   Network,
-  PanelRight,
   Plus,
   Search,
-  Settings,
-  SlashIcon,
   Sun,
-  User2,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { SidebarTrigger } from "./ui/sidebar";
+import NavItem from "./nav-item";
 
 export default function Navbar() {
   const { setTheme } = useTheme();
@@ -37,6 +30,7 @@ export default function Navbar() {
       </Button>
       {/* RIGHT */}
       <div className="flex items-center gap-2">
+        <NavItem icon={<Search />} />
         <Button variant="outline" size="icon">
           <Search />
         </Button>
@@ -70,31 +64,6 @@ export default function Navbar() {
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme("system")}>
               System
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        {/* USER MENU */}
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage src="/profile-pic.jpg" />
-              <AvatarFallback>ED</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent sideOffset={10}>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <User2 />
-              Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings />
-              Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">
-              <LogOut />
-              Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
