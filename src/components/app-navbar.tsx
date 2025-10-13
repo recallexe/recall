@@ -6,6 +6,7 @@ import {
   Network,
   Plus,
   Search,
+  Settings,
   Sun,
 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -57,6 +58,7 @@ export default function Navbar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <NavItem icon={<Settings />} />
       </div>
     </nav>
   );
