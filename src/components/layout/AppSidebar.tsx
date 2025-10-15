@@ -20,7 +20,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { NavUser } from "./nav-user";
+import { NavUser } from "../ui/nav-user";
 import { menu, sample, user } from "@/app/lib/data";
 import { Brain, ChevronRight } from "lucide-react";
 
@@ -95,7 +95,7 @@ export default function AppSidebar() {
 
       {/* SIDEBAR FOOTER */}
       <SidebarFooter className="p-4">
-        <NavUser user={user}/>
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );

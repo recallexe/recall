@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
-import AppSideBar from "@/components/app-sidebar";
-import Navbar from "@/components/app-navbar";
+import AppSideBar from "@/components/layout/AppSidebar";
+import Navbar from "@/components/layout/AppNavbar";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
@@ -34,7 +34,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
       >
-        <ThemeProvider 
+        <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem

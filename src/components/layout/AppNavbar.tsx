@@ -9,7 +9,6 @@ import {
   Settings,
   Sun,
 } from "lucide-react";
-import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,8 +16,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
-import { SidebarTrigger } from "./ui/sidebar";
-import NavItem from "./nav-item";
+import { SidebarTrigger } from "../ui/sidebar";
+import NavItem from "../ui/nav-item";
+
 
 export default function Navbar() {
   const { setTheme } = useTheme();
