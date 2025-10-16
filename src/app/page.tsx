@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <h1 className="flex justify-center h-full mt-90 text-5xl">
-        Welcome to Recall!
+        Welcome to Recall
       </h1>
       <div className="flex justify-center mt-15">
         <Button variant="outline">
