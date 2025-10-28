@@ -10,6 +10,7 @@ import {
   CalendarDays,
 } from "lucide-react";
 
+
 export const menu = [
   { title: "Dashboard", icon: LayoutDashboard, url: "/dashboard" },
   { title: "Areas", icon: Folder, url: "/dashboard/areas", key: "areas" },
@@ -40,4 +41,49 @@ export const user = {
   name: "Ehsanullah Dehzad",
   email: "m@example.com",
   avatar: "/profile-pic.jpg",
+};
+
+export const stats = {
+  areas: {
+    title: "Areas",
+    icon: <Folder size={17} />,
+    value: 5,
+    change: "+2 this week",
+    url: "dashboard/areas",
+  },
+  projects: {
+    title: "Projects",
+    icon: <Box size={17} />,
+    value: 9,
+    change: "+4 this week",
+    url: "dashboard/projects",
+  },
+  tasks: {
+    title: "Tasks",
+    icon: <CheckSquare size={17} />,
+    value: 12,
+    change: "8 due today",
+    url: "dashboard/tasks",
+  },
+  events: {
+    title: "Events",
+    icon: <Calendar size={17} />,
+    value: 6,
+    change: "2 today",
+    url: "dashboard/events",
+  },
+  notes: {
+    title: "Notes",
+    icon: <Clipboard size={17} />,
+    value: 58,
+    change: "+15 this week",
+    url: "dashboard/notes",
+  },
+  resources: {
+    title: "Resources",
+    icon: <Database size={17} />,
+    value: 34,
+    change: "+7 this week",
+    url: "dashboard/resources",
+  },
 };

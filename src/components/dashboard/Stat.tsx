@@ -8,25 +8,26 @@ type StatProps = {
   value: number | string;
   change: string;
   icon: React.ReactNode;
+  url: string;
 };
 
-export default function Stat({ title, value, change, icon }: StatProps) {
+export default function Stat({ title, value, change, icon, url }: StatProps) {
   return (
-    <div className="flex items-center justify-between">
-      {/* Left: text content (allows wrapping) */}
-      <div className="flex flex-col gap-8">
-        <Link href="/dashboard/areas" className="text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
+    <div className="flex flex-col gap-3">
+      {/* FIRST ROW */}
+      <div className="flex items-start justify-between">
+        <Link href={url} className="text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 w-30">
             {icon}
             {title}
           </div>
         </Link>
-        <h2 className="text-4xl font-semibold">{value}</h2>
+        <Plus />
       </div>
 
-      {/* Right: icon container, vertically centered */}
-      <div className="flex flex-col justify-between gap-9">
-        <Plus />
+      {/* SECOND ROW */}
+      <div className="flex items-end justify-between">
+        <h2 className="text-3xl mb-[-5px]">{value}</h2>
         <p className="text-sm text-muted-foreground">{change}</p>
       </div>
     </div>
