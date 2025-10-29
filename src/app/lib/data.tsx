@@ -284,3 +284,12 @@ export const chartData = [
   { day: "Thursday", performance: 209 },
   { day: "Friday", performance: 214 },
 ];
+
+export const schedule = [
+  {title: "Team standup", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
+  {title: "Client Presentation", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
+  {title: "Code Review", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
+  {title: "Code Review", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
+  {title: "Code Review", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
+  {title: "Code Review", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
+]

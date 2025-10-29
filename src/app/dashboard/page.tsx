@@ -10,7 +10,8 @@ import { stats, TodayOverview } from "@/app/lib/data";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import TodayOverviewList from "@/components/dashboard/TodaysOverviewList";
 import RecentUpcoming from "@/components/dashboard/RecentUpcoming";
-import { Chart } from "@/components/dashboard/Chart";
+import { Chart } from "@/components/dashboard/AppChart";
+import TodaysSchedule from "@/components/dashboard/Today'sSchedule";
 export default function Dashboard() {
   return (
     <>
@@ -25,7 +26,7 @@ export default function Dashboard() {
         </BreadcrumbList>
       </Breadcrumb>
       {/* CONTAINER */}
-      <main>
+      <main className="mb-4">
         <section>
           <div className="mt-4 flex flex-col gap-4">
             {/* Frist Row */}
@@ -85,6 +86,9 @@ export default function Dashboard() {
                   <CardTitle>Today's Schedule</CardTitle>
                   <CardDescription>Thursday, Septermber 18</CardDescription>
                 </CardHeader>
+                <CardContent className="h-67 overflow-y-auto scrollbar-thin">
+                  <TodaysSchedule />
+                </CardContent>
               </Card>
             </div>
           </div>
