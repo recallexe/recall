@@ -10,6 +10,7 @@ import { stats, TodayOverview } from "@/app/lib/data";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import TodayOverviewList from "@/components/dashboard/TodaysOverviewList";
 import RecentUpcoming from "@/components/dashboard/RecentUpcoming";
+import { Chart } from "@/components/dashboard/Chart";
 export default function Dashboard() {
   return (
     <>
@@ -47,7 +48,7 @@ export default function Dashboard() {
                 <CardHeader>
                   <CardTitle>Today's Overview</CardTitle>
                 </CardHeader>
-                <CardContent className="h-64 overflow-y-auto scrollbar-thin">
+                <CardContent className="space-y-2 h-64 overflow-y-auto scrollbar-thin">
                   {TodayOverview.map((item, index) => (
                     <TodayOverviewList
                       key={index}
@@ -69,6 +70,21 @@ export default function Dashboard() {
                 <CardContent>
                   <RecentUpcoming />
                 </CardContent>
+              </Card>
+              {/* Third Row */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Weekly Performance</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Chart />
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Today's Schedule</CardTitle>
+                  <CardDescription>Thursday, Septermber 18</CardDescription>
+                </CardHeader>
               </Card>
             </div>
           </div>

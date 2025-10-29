@@ -274,3 +274,13 @@ export const recentupcomming = {
     },
   ],
 };
+
+
+export const chartData = [
+  { day: "Saturday", performance: 186 },
+  { day: "Sunday", performance: 305 },
+  { day: "Monday", performance: 73 },
+  { day: "Wednesday", performance: 237 },
+  { day: "Thursday", performance: 209 },
+  { day: "Friday", performance: 214 },
+];
