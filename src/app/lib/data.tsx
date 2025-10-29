@@ -131,6 +131,15 @@ export const TodayOverview = [
     priorty: "high",
     url: "dashboard/events",
   },
+  {
+    icon: [<CheckSquare size={18} />, <Calendar size={18} />],
+    message: "Attend career fair",
+    area: "School",
+    type: "Event",
+    deadline: "in two days",
+    priorty: "high",
+    url: "dashboard/events",
+  },
 ];
 
 export const recentupcomming = {

@@ -47,21 +47,19 @@ export default function Dashboard() {
                 <CardHeader>
                   <CardTitle>Today's Overview</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <CardContent>
-                    {TodayOverview.map((item, index) => (
-                      <TodayOverviewList
-                        key={index}
-                        icon={item.icon}
-                        message={item.message}
-                        area={item.area}
-                        type={item.type}
-                        deadline={item.deadline}
-                        priorty={item.priorty}
-                        url={item.url}
-                      />
-                    ))}
-                  </CardContent>
+                <CardContent className="h-64 overflow-y-auto scrollbar-thin">
+                  {TodayOverview.map((item, index) => (
+                    <TodayOverviewList
+                      key={index}
+                      icon={item.icon}
+                      message={item.message}
+                      area={item.area}
+                      type={item.type}
+                      deadline={item.deadline}
+                      priorty={item.priorty}
+                      url={item.url}
+                    />
+                  ))}
                 </CardContent>
               </Card>
               <Card>

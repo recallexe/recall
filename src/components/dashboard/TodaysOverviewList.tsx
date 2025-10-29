@@ -28,17 +28,17 @@ export default function TodayOverviewList({icon, message, area, type, deadline, 
             <div>
               {priorty === "high" && (
                 <div className="bg-red-400 px-2 rounded-full text-black text-xs">
-                  High Priority
+                  High
                 </div>
               )}
               {priorty === "medium" && (
                 <div className="bg-yellow-300 px-2 rounded-full text-black text-xs">
-                  Medium Priority
+                  Medium
                 </div>
               )}
               {priorty === "low" && (
                 <div className="bg-green-400 px-2 rounded-full text-black text-xs">
-                  Low Priority
+                  Low
                 </div>
               )}
             </div>
