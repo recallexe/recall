@@ -14,12 +14,13 @@ type TOLProps = {
 
 export default function TodayOverviewList({icon, message, area, type, deadline, priorty, url}:TOLProps) {
     return (
-      <Link href={`${url}`}>
         <div className="py-2 border-b last:border-none">
+          <Link href={`${url}`}>
           <div className="flex items-center gap-2">
             {type === "Task" ? icon[0] : icon[1]}
             {message}
           </div>
+          </Link>
           <div className="flex items-center gap-5 text-sm text-muted-foreground pl-7">
             <div>{area}</div>
             <div>{type}</div>
@@ -43,6 +44,5 @@ export default function TodayOverviewList({icon, message, area, type, deadline, 
             </div>
           </div>
         </div>
-      </Link>
     );
 }
