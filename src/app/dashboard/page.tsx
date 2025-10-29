@@ -77,7 +77,7 @@ export default function Dashboard() {
                 <CardHeader>
                   <CardTitle>Weekly Performance</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="h-67">
                   <Chart />
                 </CardContent>
               </Card>
