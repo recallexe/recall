@@ -6,8 +6,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
-import { stats } from "@/app/lib/data";
-import { Card } from "@/components/ui/card";
+import { stats, TodayOverview } from "@/app/lib/data";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import TodayOverviewList from "@/components/dashboard/TodaysOverviewList";
 export default function Dashboard() {
   return (
     <>
@@ -80,10 +81,45 @@ export default function Dashboard() {
             </div>
             {/* Second and third row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <Card />
-              <Card />
-              <Card />
-              <Card />
+              <Card>
+                <CardHeader>
+                  <CardTitle>Today's Overview</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <TodayOverviewList
+                    icon={TodayOverview[0].icon}
+                    message={TodayOverview[0].message}
+                    area={TodayOverview[0].area}
+                    type={TodayOverview[0].type}
+                    deadline={TodayOverview[0].deadline}
+                    priorty={TodayOverview[0].priorty}
+                  />
+                  <TodayOverviewList
+                    icon={TodayOverview[1].icon}
+                    message={TodayOverview[1].message}
+                    area={TodayOverview[1].area}
+                    type={TodayOverview[1].type}
+                    deadline={TodayOverview[1].deadline}
+                    priorty={TodayOverview[1].priorty}
+                  />
+                  <TodayOverviewList
+                    icon={TodayOverview[2].icon}
+                    message={TodayOverview[2].message}
+                    area={TodayOverview[2].area}
+                    type={TodayOverview[2].type}
+                    deadline={TodayOverview[2].deadline}
+                    priorty={TodayOverview[2].priorty}
+                  />
+                  <TodayOverviewList
+                    icon={TodayOverview[3].icon}
+                    message={TodayOverview[3].message}
+                    area={TodayOverview[3].area}
+                    type={TodayOverview[3].type}
+                    deadline={TodayOverview[3].deadline}
+                    priorty={TodayOverview[3].priorty}
+                  />
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

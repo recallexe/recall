@@ -92,3 +92,38 @@ export const stats = {
     bgcolor: "bg-resource-card",
   },
 };
+
+export const TodayOverview = [
+  {
+    icon: [<CheckSquare size={18} />, <Calendar size={18} />],
+    message: "Complete project proposal for Q4 marketing campaing",
+    area: "School",
+    type: "Task",
+    deadline: "today",
+    priorty: "high",
+  },
+  {
+    icon: [<CheckSquare size={18} />, <Calendar size={18} />],
+    message: "Review and respond to client emails",
+    area: "Job",
+    type: "Task",
+    deadline: "tomorrow",
+    priorty: "medium",
+  },
+  {
+    icon: [<CheckSquare size={18} />, <Calendar size={18} />],
+    message: "Advisor's meeting",
+    area: "School",
+    type: "Event",
+    deadline: "oct 21",
+    priorty: "low",
+  },
+  {
+    icon: [<CheckSquare size={18} />, <Calendar size={18} />],
+    message: "Career fair",
+    area: "School",
+    type: "Event",
+    deadline: "in two days",
+    priorty: "high",
+  },
+];
