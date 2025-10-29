@@ -3,6 +3,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 export default function Events() {
@@ -14,7 +15,9 @@ export default function Events() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/dashboard/events">Events</BreadcrumbLink>
+          <BreadcrumbPage>
+            <BreadcrumbLink href="/dashboard/events">Events</BreadcrumbLink>
+          </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

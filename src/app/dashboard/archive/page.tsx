@@ -3,6 +3,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 export default function Archive() {
@@ -14,7 +15,9 @@ export default function Archive() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/dashboard/archive">Archive</BreadcrumbLink>
+          <BreadcrumbPage>
+            <BreadcrumbLink href="/dashboard/archive">Archive</BreadcrumbLink>
+          </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

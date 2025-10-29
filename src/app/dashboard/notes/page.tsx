@@ -16,7 +16,9 @@ export default function Notes() {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbPage>
-            <BreadcrumbLink href="/dashboard/notes">Notes</BreadcrumbLink>
+            <BreadcrumbPage>
+              <BreadcrumbLink href="/dashboard/noes">Notes</BreadcrumbLink>
+            </BreadcrumbPage>
           </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>

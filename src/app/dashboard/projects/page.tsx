@@ -3,6 +3,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 export default function Projects() {
@@ -14,7 +15,9 @@ export default function Projects() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/dashboard/projects">Projects</BreadcrumbLink>
+          <BreadcrumbPage>
+            <BreadcrumbLink href="/dashboard/projects">Projects</BreadcrumbLink>
+          </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
