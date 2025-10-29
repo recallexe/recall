@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { stats, TodayOverview } from "@/app/lib/data";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import TodayOverviewList from "@/components/dashboard/TodaysOverviewList";
+import TodayOverviewList from "@/components/dashboard/TodaysOverview";
 import RecentUpcoming from "@/components/dashboard/RecentUpcoming";
 import { Chart } from "@/components/dashboard/AppChart";
 import TodaysSchedule from "@/components/dashboard/Today'sSchedule";

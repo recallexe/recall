@@ -275,7 +275,6 @@ export const recentupcomming = {
   ],
 };
 
-
 export const chartData = [
   { day: "Saturday", performance: 186 },
   { day: "Sunday", performance: 305 },
@@ -286,10 +285,40 @@ export const chartData = [
 ];
 
 export const schedule = [
-  {title: "Team standup", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
-  {title: "Client Presentation", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
-  {title: "Code Review", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
-  {title: "Code Review", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
-  {title: "Code Review", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
-  {title: "Code Review", time: "9:00 AM", duration: "30 min", location: "Conference Hall"},
-]
+  {
+    title: "Team standup",
+    time: "9:00 AM",
+    duration: "30 min",
+    location: "Conference Hall",
+  },
+  {
+    title: "Client Presentation",
+    time: "9:00 AM",
+    duration: "30 min",
+    location: "Conference Hall",
+  },
+  {
+    title: "Code Review",
+    time: "9:00 AM",
+    duration: "30 min",
+    location: "Conference Hall",
+  },
+  {
+    title: "Code Review",
+    time: "9:00 AM",
+    duration: "30 min",
+    location: "Conference Hall",
+  },
+  {
+    title: "Code Review",
+    time: "9:00 AM",
+    duration: "30 min",
+    location: "Conference Hall",
+  },
+  {
+    title: "Code Review",
+    time: "9:00 AM",
+    duration: "30 min",
+    location: "Conference Hall",
+  },
+];
