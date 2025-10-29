@@ -10,7 +10,6 @@ import {
   CalendarDays,
 } from "lucide-react";
 
-
 export const menu = [
   { title: "Dashboard", icon: LayoutDashboard, url: "/dashboard" },
   { title: "Areas", icon: Folder, url: "/dashboard/areas", key: "areas" },
@@ -50,6 +49,7 @@ export const stats = {
     value: 5,
     change: "+2 this week",
     url: "dashboard/areas",
+    bgcolor: "bg-area-card",
   },
   projects: {
     title: "Projects",
@@ -57,6 +57,7 @@ export const stats = {
     value: 9,
     change: "+4 this week",
     url: "dashboard/projects",
+    bgcolor: "bg-project-card",
   },
   tasks: {
     title: "Tasks",
@@ -64,6 +65,7 @@ export const stats = {
     value: 12,
     change: "8 due today",
     url: "dashboard/tasks",
+    bgcolor: "bg-task-card",
   },
   events: {
     title: "Events",
@@ -71,6 +73,7 @@ export const stats = {
     value: 6,
     change: "2 today",
     url: "dashboard/events",
+    bgcolor: "bg-event-card",
   },
   notes: {
     title: "Notes",
@@ -78,6 +81,7 @@ export const stats = {
     value: 58,
     change: "+15 this week",
     url: "dashboard/notes",
+    bgcolor: "bg-note-card",
   },
   resources: {
     title: "Resources",
@@ -85,5 +89,6 @@ export const stats = {
     value: 34,
     change: "+7 this week",
     url: "dashboard/resources",
+    bgcolor: "bg-resource-card",
   },
 };

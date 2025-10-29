@@ -1,6 +1,5 @@
 import React from "react";
-import { Button } from "../ui/button";
-import { Folder, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 
 type StatProps = {
@@ -9,15 +8,25 @@ type StatProps = {
   change: string;
   icon: React.ReactNode;
   url: string;
+  bgcolor?: string;
 };
 
-export default function Stat({ title, value, change, icon, url }: StatProps) {
+export default function Stat({
+  title,
+  value,
+  change,
+  icon,
+  url,
+  bgcolor,
+}: StatProps) {
   return (
-    <div className="flex flex-col gap-3">
+    <div
+      className={`flex flex-col gap-4 ${bgcolor} p-4 rounded-lg border-2 hover:shadow-md transition`}
+    >
       {/* FIRST ROW */}
-      <div className="flex items-start justify-between">
-        <Link href={url} className="text-sm text-muted-foreground">
-          <div className="flex items-center gap-2 w-30">
+      <div className="flex items-center justify-between">
+        <Link href={url} className=" text-muted-foreground">
+          <div className="flex items-center gap-2">
             {icon}
             {title}
           </div>
