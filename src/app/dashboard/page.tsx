@@ -9,6 +9,7 @@ import {
 import { stats, TodayOverview } from "@/app/lib/data";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import TodayOverviewList from "@/components/dashboard/TodaysOverviewList";
+import RecentUpcoming from "@/components/dashboard/RecentUpcoming";
 export default function Dashboard() {
   return (
     <>
@@ -93,6 +94,7 @@ export default function Dashboard() {
                     type={TodayOverview[0].type}
                     deadline={TodayOverview[0].deadline}
                     priorty={TodayOverview[0].priorty}
+                    url={TodayOverview[0].url}
                   />
                   <TodayOverviewList
                     icon={TodayOverview[1].icon}
@@ -101,6 +103,7 @@ export default function Dashboard() {
                     type={TodayOverview[1].type}
                     deadline={TodayOverview[1].deadline}
                     priorty={TodayOverview[1].priorty}
+                    url={TodayOverview[1].url}
                   />
                   <TodayOverviewList
                     icon={TodayOverview[2].icon}
@@ -109,6 +112,7 @@ export default function Dashboard() {
                     type={TodayOverview[2].type}
                     deadline={TodayOverview[2].deadline}
                     priorty={TodayOverview[2].priorty}
+                    url={TodayOverview[2].url}
                   />
                   <TodayOverviewList
                     icon={TodayOverview[3].icon}
@@ -117,7 +121,16 @@ export default function Dashboard() {
                     type={TodayOverview[3].type}
                     deadline={TodayOverview[3].deadline}
                     priorty={TodayOverview[3].priorty}
+                    url={TodayOverview[3].url}
                   />
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Recent/Upcomming</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <RecentUpcoming />
                 </CardContent>
               </Card>
             </div>

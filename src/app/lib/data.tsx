@@ -8,6 +8,7 @@ import {
   Folder,
   LayoutDashboard,
   CalendarDays,
+  icons,
 } from "lucide-react";
 
 export const menu = [
@@ -101,6 +102,7 @@ export const TodayOverview = [
     type: "Task",
     deadline: "today",
     priorty: "high",
+    url: "dashboard/tasks",
   },
   {
     icon: [<CheckSquare size={18} />, <Calendar size={18} />],
@@ -109,6 +111,7 @@ export const TodayOverview = [
     type: "Task",
     deadline: "tomorrow",
     priorty: "medium",
+    url: "dashboard/tasks",
   },
   {
     icon: [<CheckSquare size={18} />, <Calendar size={18} />],
@@ -117,13 +120,148 @@ export const TodayOverview = [
     type: "Event",
     deadline: "oct 21",
     priorty: "low",
+    url: "dashboard/events",
   },
   {
     icon: [<CheckSquare size={18} />, <Calendar size={18} />],
-    message: "Career fair",
+    message: "Attend career fair",
     area: "School",
     type: "Event",
     deadline: "in two days",
     priorty: "high",
+    url: "dashboard/events",
   },
 ];
+
+export const recentupcomming = {
+  Notes: [
+    {
+      title: "Meeting summary",
+      icon: <Clipboard size={18} />,
+      date: "Oct 25, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Design feedback",
+      icon: <Clipboard size={18} />,
+      date: "Oct 23, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Meeting summary",
+      icon: <Clipboard size={18} />,
+      date: "Oct 25, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Design feedback",
+      icon: <Clipboard size={18} />,
+      date: "Oct 23, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Meeting summary",
+      icon: <Clipboard size={18} />,
+      date: "Oct 25, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Design feedback",
+      icon: <Clipboard size={18} />,
+      date: "Oct 23, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Meeting summary",
+      icon: <Clipboard size={18} />,
+      date: "Oct 25, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Design feedback",
+      icon: <Clipboard size={18} />,
+      date: "Oct 23, 2025",
+      url: "dashboard/notes",
+    },
+  ],
+  Projects: [
+    {
+      title: "Website Redesign",
+      icon: <Box size={18} />,
+      date: "Due Nov 5, 2025",
+      url: "dashboard/projects",
+    },
+    {
+      title: "Marketing Plan",
+      icon: <Box size={18} />,
+      date: "Due Nov 10, 2025",
+      url: "dashboard/projects",
+    },
+    {
+      title: "Website Redesign",
+      icon: <Box size={18} />,
+      date: "Due Nov 5, 2025",
+      url: "dashboard/projects",
+    },
+    {
+      title: "Marketing Plan",
+      icon: <Box size={18} />,
+      date: "Due Nov 10, 2025",
+      url: "dashboard/projects",
+    },
+  ],
+  Tasks: [
+    {
+      title: "Fix navbar alignment",
+      icon: <CheckSquare size={18} />,
+      date: "Today",
+      url: "dashboard/tasks",
+    },
+    {
+      title: "Email client report",
+      icon: <CheckSquare size={18} />,
+      date: "Tomorrow",
+      url: "dashboard/tasks",
+    },
+    {
+      title: "Fix navbar alignment",
+      icon: <CheckSquare size={18} />,
+      date: "Today",
+      url: "dashboard/tasks",
+    },
+    {
+      title: "Email client report",
+      icon: <CheckSquare size={18} />,
+      date: "Tomorrow",
+      url: "dashboard/tasks",
+    },
+  ],
+  Events: [
+    {
+      title: "Team Meeting",
+      icon: <Calendar size={18} />,
+      date: "Oct 30, 2025",
+      url: "dashboard/events",
+    },
+    {
+      title: "Launch Party",
+      icon: <Calendar size={18} />,
+      date: "Nov 2, 2025",
+      url: "dashboard/events",
+    },
+  ],
+  Resources: [
+    {
+      title: "Brand Guidelines",
+      icon: <Database size={18} />,
+      date: "Updated Oct 20, 2025",
+      url: "dashboard/resources",
+    },
+    {
+      title: "Project Charter",
+      icon: <Database size={18} />,
+      date: "Updated Oct 18, 2025",
+      url: "dashboard/resources",
+    },
+  ],
+};
