@@ -21,11 +21,11 @@ export default function Stat({
 }: StatProps) {
   return (
     <div
-      className={`flex flex-col gap-4 ${bgcolor} p-4 rounded-lg border-2 hover:shadow-md transition`}
+      className={`flex flex-col gap-4 p-4 rounded-lg border-2 hover:shadow-md transition`}
     >
       {/* FIRST ROW */}
       <div className="flex items-center justify-between">
-        <Link href={url} className=" text-muted-foreground">
+        <Link href={url}>
           <div className="flex items-center gap-2">
             {icon}
             {title}
@@ -36,8 +36,8 @@ export default function Stat({
 
       {/* SECOND ROW */}
       <div className="flex items-end justify-between">
-        <h2 className="text-3xl mb-[-5px]">{value}</h2>
-        <p className="text-sm text-muted-foreground">{change}</p>
+        <h2 className="text-3xl text-blue-500 mb-[-5px]">{value}</h2>
+        <p className="text-sm">{change}</p>
       </div>
     </div>
   );

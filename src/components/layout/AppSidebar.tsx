@@ -31,8 +31,10 @@ export default function AppSidebar() {
       <SidebarHeader>
         <Link href="/dashboard">
           <div className="flex items-center gap-2 px-4 pt-4">
-            <Brain size={30} />
-            <span className="text-[27px] font-serif">Recall</span>
+            <Brain size={30} color="#4299e1" />
+            <span className="text-[27px] font-serif text-[#4299e1]">
+              Recall
+            </span>
           </div>
         </Link>
       </SidebarHeader>
