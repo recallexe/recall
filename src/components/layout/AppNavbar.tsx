@@ -26,7 +26,7 @@ export default function Navbar() {
   return (
     <nav className="p-4 flex items-center justify-between sticky top-0 z-50 bg-sidebar/60 backdrop-blur-md">
       {/* LEFT */}
-      <NavItem icon={<SidebarTrigger />} />
+      <SidebarTrigger />
       {/* RIGHT */}
       <div className="flex items-center gap-2">
         <NavItem icon={<Search />} />
@@ -36,7 +36,7 @@ export default function Navbar() {
         <NavItem icon={<Bell />} />
         {/* THEME MENU */}
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
             <NavItem
               icon={
                 <>
