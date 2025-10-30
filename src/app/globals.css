@@ -158,3 +158,60 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Sidebar specific transitions */
+.sidebar-item {
+  view-transition-name: var(--item-name);
+}
+
+::view-transition-group(.sidebar-item) {
+  animation-duration: 0.2s;
+}
+
+::view-transition-old(.sidebar-item) {
+  animation: slide-out-left 0.2s ease-out;
+}
+
+::view-transition-new(.sidebar-item) {
+  animation: slide-in-right 0.2s ease-out;
+}
+
+@keyframes slide-out-left {
+  to {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+}
