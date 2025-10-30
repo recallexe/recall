@@ -4,7 +4,7 @@ import "@/app/globals.css";
 import AppSideBar from "@/components/layout/AppSidebar";
 import Navbar from "@/components/layout/AppNavbar";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 
 const geistSans = Geist({
@@ -39,10 +39,10 @@ export default async function DashboardLayout({
       >
         <SidebarProvider defaultOpen={defaultOpen}>
           <AppSideBar />
-          <main className="w-full">
+          <SidebarInset>
             <Navbar />
             <div className="px-4">{children}</div>
-          </main>
+          </SidebarInset>
         </SidebarProvider>
       </ThemeProvider>
     </div>
