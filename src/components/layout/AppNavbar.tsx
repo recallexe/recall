@@ -36,7 +36,7 @@ export default function Navbar() {
         <NavItem icon={<Bell />} />
         {/* THEME MENU */}
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <NavItem
               icon={
                 <>
