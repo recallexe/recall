@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { ViewTransition } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Brain, ChevronRight } from "lucide-react";
@@ -204,49 +203,46 @@ function MenuItem({
   badge?: string;
 }) {
   return (
-    <ViewTransition>
-      <SidebarMenuItem>
-        <SidebarMenuButton
-          asChild
-          isActive={isActive}
-          tooltip={title}
-          className={`
-            group/item relative overflow-hidden transition-all duration-200
-            before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0
-            before:w-1 before:bg-linear-to-b before:from-primary before:to-primary/60
-            before:opacity-0 before:scale-y-0 before:-translate-x-1
-            before:transition-all before:duration-300 before:ease-out
-            ${isActive ? 'before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent shadow-sm' : ''}
-            hover:bg-sidebar-accent/70 active:scale-[0.98]
-            after:content-[''] after:absolute after:inset-0 after:bg-linear-to-r 
-            after:from-transparent after:via-primary/5 after:to-transparent
-            after:-translate-x-full after:transition-transform after:duration-500
-            hover:after:translate-x-full
-          `}
-        >
-          <Link href={url} className="flex items-center gap-3 w-full group/link">
-            <div className={`
-              p-1.5 rounded-md transition-all duration-200
-              ${isActive ? 'bg-primary/10 text-primary' : 'group-hover/item:bg-sidebar-accent'}
-            `}>
-              <Icon className="h-4 w-4 transition-all duration-200 group-hover/link:scale-110" />
-            </div>
-            <span className={`
-              transition-all duration-200 font-medium
-              ${isActive ? 'text-primary' : ''}
-              group-hover/link:translate-x-0.5
-            `}>
-              {title}
-            </span>
-          </Link>
-        </SidebarMenuButton>
-        {badge && (
-          <SidebarMenuBadge className="transition-all duration-200 bg-primary/10 text-primary font-semibold">
-            {badge}
-          </SidebarMenuBadge>
-        )}
-      </SidebarMenuItem>
-    </ViewTransition>
+    <SidebarMenuItem>
+      <SidebarMenuButton
+        asChild
+        isActive={isActive}
+        tooltip={title}
+        className={`
+          group/item relative overflow-hidden transition-all duration-200
+          before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0
+          before:w-1 before:bg-linear-to-b before:from-primary before:to-primary/60
+          before:opacity-0 before:scale-y-0 before:-translate-x-1
+          before:transition-all before:duration-300 before:ease-out
+          ${isActive ? 'before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50' : 'bg-transparent'}
+          hover:bg-sidebar-accent/50 active:scale-[0.98]
+          after:content-[''] after:absolute after:inset-0 after:bg-linear-to-r 
+          after:from-transparent after:via-primary/5 after:to-transparent
+          after:-translate-x-full after:transition-transform after:duration-500
+          hover:after:translate-x-full
+        `}
+      >
+        <Link href={url} className="flex items-center gap-3 w-full group/link">
+          <Icon className={`
+            h-4 w-4 transition-all duration-200 
+            group-hover/link:scale-110
+            ${isActive ? 'text-primary' : 'text-muted-foreground group-hover/link:text-foreground'}
+          `} />
+          <span className={`
+            transition-all duration-200 font-medium
+            ${isActive ? 'text-primary' : 'text-foreground'}
+            group-hover/link:translate-x-0.5
+          `}>
+            {title}
+          </span>
+        </Link>
+      </SidebarMenuButton>
+      {badge && (
+        <SidebarMenuBadge className="transition-all duration-200 bg-primary/10 text-primary font-semibold">
+          {badge}
+        </SidebarMenuBadge>
+      )}
+    </SidebarMenuItem>
   );
 }
 
@@ -268,88 +264,85 @@ function CollapsibleMenuItem({
   const { Icon } = item;
 
   return (
-    <ViewTransition>
-      <Collapsible
-        open={open}
-        onOpenChange={setOpen}
-        className="group/collapsible"
-      >
-        <SidebarMenuItem>
-          <SidebarMenuButton
-            asChild
-            isActive={isActive}
-            tooltip={item.title}
-            className={`
+    <Collapsible
+      open={open}
+      onOpenChange={setOpen}
+      className="group/collapsible"
+    >
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          asChild
+          isActive={isActive}
+          tooltip={item.title}
+          className={`
               group/item relative overflow-hidden transition-all duration-200
               before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0
               before:w-1 before:bg-linear-to-b before:from-primary before:to-primary/60
               before:opacity-0 before:scale-y-0 before:-translate-x-1
               before:transition-all before:duration-300 before:ease-out
-              ${isActive ? 'before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent shadow-sm' : ''}
-              hover:bg-sidebar-accent/70 active:scale-[0.98]
+              ${isActive ? 'before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50' : 'bg-transparent'}
+              hover:bg-sidebar-accent/50 active:scale-[0.98]
               after:content-[''] after:absolute after:inset-0 after:bg-linear-to-r 
               after:from-transparent after:via-primary/5 after:to-transparent
               after:-translate-x-full after:transition-transform after:duration-500
               hover:after:translate-x-full
             `}
-          >
-            <Link href={item.url} className="flex items-center gap-3 w-full group/link">
-              <div className={`
-                p-1.5 rounded-md transition-all duration-200
-                ${isActive ? 'bg-primary/10 text-primary' : 'group-hover/item:bg-sidebar-accent'}
-              `}>
-                <Icon className="h-4 w-4 transition-all duration-200 group-hover/link:scale-110" />
-              </div>
-              <span className={`
+        >
+          <Link href={item.url} className="flex items-center gap-3 w-full group/link">
+            <Icon className={`
+               h-4 w-4 transition-all duration-200 
+               group-hover/link:scale-110
+               ${isActive ? 'text-primary' : 'text-muted-foreground group-hover/link:text-foreground'}
+             `} />
+            <span className={`
                 transition-all duration-200 font-medium
-                ${isActive ? 'text-primary' : ''}
+                ${isActive ? 'text-primary' : 'text-foreground'}
                 group-hover/link:translate-x-0.5
               `}>
-                {item.title}
-              </span>
-            </Link>
-          </SidebarMenuButton>
+              {item.title}
+            </span>
+          </Link>
+        </SidebarMenuButton>
 
-          <CollapsibleTrigger asChild>
-            <SidebarMenuAction
-              showOnHover
-              className="transition-all duration-200 hover:bg-primary/10 hover:text-primary"
-            >
-              <ChevronRight className="transition-all duration-300 ease-out group-data-[state=open]/collapsible:rotate-90" />
-            </SidebarMenuAction>
-          </CollapsibleTrigger>
+        <CollapsibleTrigger asChild>
+          <SidebarMenuAction
+            showOnHover
+            className="transition-all duration-200 hover:bg-primary/10 hover:text-primary"
+          >
+            <ChevronRight className="transition-all duration-300 ease-out group-data-[state=open]/collapsible:rotate-90" />
+          </SidebarMenuAction>
+        </CollapsibleTrigger>
 
-          {badge && (
-            <SidebarMenuBadge className="right-8 transition-all duration-200 bg-primary/10 text-primary font-semibold">
-              {badge}
-            </SidebarMenuBadge>
-          )}
+        {badge && (
+          <SidebarMenuBadge className="right-8 transition-all duration-200 bg-primary/10 text-primary font-semibold">
+            {badge}
+          </SidebarMenuBadge>
+        )}
 
-          <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-            <SidebarMenuSub className="ml-0 pl-0 border-l-2 border-primary/20">
-              {subs.map((subItem, index) => (
-                <SidebarMenuSubItem
-                  key={subItem}
-                  className="animate-in fade-in slide-in-from-left-2"
-                  style={{ animationDelay: `${index * 50}ms` }}
+        <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+          <SidebarMenuSub className="ml-0 pl-0 border-l-2 border-primary/20">
+            {subs.map((subItem, index) => (
+              <SidebarMenuSubItem
+                key={subItem}
+                className="animate-in fade-in slide-in-from-left-2"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <SidebarMenuSubButton
+                  asChild
+                  className="transition-all duration-200 bg-transparent hover:bg-sidebar-accent/50 hover:translate-x-1 ml-4"
                 >
-                  <SidebarMenuSubButton
-                    asChild
-                    className="transition-all duration-200 hover:bg-sidebar-accent/70 hover:translate-x-1 ml-4"
-                  >
-                    <Link href="#" className="transition-all duration-200 group/sublink">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover/sublink:bg-primary transition-all duration-200" />
-                      <span className="group-hover/sublink:translate-x-0.5 transition-all duration-200">
-                        {subItem}
-                      </span>
-                    </Link>
-                  </SidebarMenuSubButton>
-                </SidebarMenuSubItem>
-              ))}
-            </SidebarMenuSub>
-          </CollapsibleContent>
-        </SidebarMenuItem>
-      </Collapsible>
-    </ViewTransition>
+                  <Link href="#" className="transition-all duration-200 group/sublink">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover/sublink:bg-primary transition-all duration-200" />
+                    <span className="text-muted-foreground group-hover/sublink:text-foreground group-hover/sublink:translate-x-0.5 transition-all duration-200">
+                      {subItem}
+                    </span>
+                  </Link>
+                </SidebarMenuSubButton>
+              </SidebarMenuSubItem>
+            ))}
+          </SidebarMenuSub>
+        </CollapsibleContent>
+      </SidebarMenuItem>
+    </Collapsible>
   );
 }
