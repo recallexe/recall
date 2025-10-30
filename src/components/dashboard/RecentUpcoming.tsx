@@ -30,7 +30,7 @@ export default function RecentUpcoming() {
       </ul>
 
       {/* Content */}
-      <div className="h-50 overflow-y-auto scrollbar-thin">
+      <div className="h-60 overflow-y-auto scrollbar-thin">
         {data[activeTab].map((item, index) => (
           <div
             key={index}

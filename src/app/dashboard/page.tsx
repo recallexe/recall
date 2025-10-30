@@ -49,7 +49,7 @@ export default function Dashboard() {
                 <CardHeader>
                   <CardTitle>Today's Overview</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2 h-64 overflow-y-auto scrollbar-thin">
+                <CardContent className="space-y-2 h-75 overflow-y-auto scrollbar-thin">
                   {TodayOverview.map((item, index) => (
                     <TodayOverviewList
                       key={index}
@@ -77,7 +77,7 @@ export default function Dashboard() {
                 <CardHeader>
                   <CardTitle>Weekly Performance</CardTitle>
                 </CardHeader>
-                <CardContent className="h-67">
+                <CardContent className="h-75">
                   <Chart />
                 </CardContent>
               </Card>
@@ -86,7 +86,7 @@ export default function Dashboard() {
                   <CardTitle>Today's Schedule</CardTitle>
                   <CardDescription>Thursday, Septermber 18</CardDescription>
                 </CardHeader>
-                <CardContent className="h-67 overflow-y-auto scrollbar-thin">
+                <CardContent className="h-75 overflow-y-auto scrollbar-thin">
                   <TodaysSchedule />
                 </CardContent>
               </Card>
