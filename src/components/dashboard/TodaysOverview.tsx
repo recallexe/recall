@@ -2,7 +2,7 @@ import { TodayOverview } from "@/app/lib/data";
 import Link from "next/link";
 
 type TOLProps = {
-  icon: any;
+  icon: React.ReactNode;
   message: string;
   area: string;
   type: string;
