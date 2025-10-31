@@ -24,7 +24,7 @@ export default function Navbar() {
   const { setTheme } = useTheme();
 
   return (
-    <nav className="p-4 flex items-center justify-between sticky top-0 z-50 bg-sidebar/60 backdrop-blur-md">
+    <nav className="p-4 flex items-center justify-between sticky top-0 z-50 bg-background/60 backdrop-blur-md">
       {/* LEFT */}
       <NavItem icon={<SidebarTrigger />} />
       {/* RIGHT */}

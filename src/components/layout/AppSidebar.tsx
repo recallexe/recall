@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/collapsible";
 import { NavUser } from "../ui/nav-user";
 import { menu, sample, user } from "@/app/lib/data";
-import { Brain, ChevronRight } from "lucide-react";
+import { ChevronRight, Orbit } from "lucide-react";
 
 export default function AppSidebar() {
   return (
@@ -31,10 +31,8 @@ export default function AppSidebar() {
       <SidebarHeader>
         <Link href="/dashboard">
           <div className="flex items-center gap-2 px-4 pt-4">
-            <Brain size={30} color="#4299e1" />
-            <span className="text-[27px] font-serif text-[#4299e1]">
-              Recall
-            </span>
+            <Orbit size={30} color="#3B82F6" />
+            <span className="text-[27px] text-blue-500">LifeOS</span>
           </div>
         </Link>
       </SidebarHeader>
