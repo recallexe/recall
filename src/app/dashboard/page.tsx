@@ -39,7 +39,6 @@ export default function Dashboard() {
                   change={item.change}
                   icon={item.icon}
                   url={item.url}
-                  bgcolor={item.bgcolor}
                 />
               ))}
             </div>
