@@ -41,14 +41,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-
-  /* === Stat Card Colors === */
-  --color-area-card: var(--area-card);
-  --color-project-card: var(--project-card);
-  --color-task-card: var(--task-card);
-  --color-event-card: var(--event-card);
-  --color-note-card: var(--note-card);
-  --color-resource-card: var(--resource-card);
 }
 
 :root {
@@ -84,15 +76,6 @@
   --sidebar-ring: oklch(0.708 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
-
-  /* === Stat Card Colors (Light) === */
-  --area-card: oklch(0.97 0.02 100);
-  --project-card: oklch(0.97 0.05 60);
-  --task-card: oklch(0.96 0.02 250);
-  --event-card: oklch(0.97 0.02 150);
-  --note-card: oklch(0.97 0.02 320);
-  --resource-card: oklch(0.95 0.02 210);
-
 }
 
 .dark {
@@ -119,7 +102,7 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.145 0 0);
+  --sidebar: oklch(0.12 0.02 250°);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
@@ -127,15 +110,6 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-
-  /* === Stat Card Colors (Dark) === */
-  --area-card: oklch(0.26 0.02 100);
-  --project-card: oklch(0.26 0.05 60); /* changed to orange */
-  --task-card: oklch(0.26 0.02 250);
-  --event-card: oklch(0.26 0.02 150);
-  --note-card: oklch(0.26 0.02 320);
-  --resource-card: oklch(0.26 0.02 210);
-
 }
 
 @layer base {
@@ -144,62 +118,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-/* View Transitions */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.3s;
-}
-
-::view-transition-old(root) {
-  animation-name: fade-out;
-}
-
-::view-transition-new(root) {
-  animation-name: fade-in;
-}
-
-@keyframes fade-out {
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-}
-
-/* Sidebar specific transitions */
-.sidebar-item {
-  view-transition-name: var(--item-name);
-}
-
-::view-transition-group(.sidebar-item) {
-  animation-duration: 0.2s;
-}
-
-::view-transition-old(.sidebar-item) {
-  animation: slide-out-left 0.2s ease-out;
-}
-
-::view-transition-new(.sidebar-item) {
-  animation: slide-in-right 0.2s ease-out;
-}
-
-@keyframes slide-out-left {
-  to {
-    transform: translateX(-10px);
-    opacity: 0;
-  }
-}
-
-@keyframes slide-in-right {
-  from {
-    transform: translateX(10px);
-    opacity: 0;
   }
 }
