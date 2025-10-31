@@ -3,7 +3,6 @@ import { Calendar, CheckSquare } from "lucide-react";
 import Link from "next/link";
 
 type TOLProps = {
-  icon: React.ReactNode;
   message: string;
   area: string;
   type: string;
@@ -13,7 +12,6 @@ type TOLProps = {
 };
 
 export default function TodayOverviewList({
-  icon,
   message,
   area,
   type,
@@ -25,7 +23,7 @@ export default function TodayOverviewList({
     <div className="pb-2 border-b last:border-none">
       <Link href={`${url}`}>
         <div className="flex items-center gap-2">
-          {type === "Task" ? <CheckSquare size={18} /> : <Calendar size={18}/>}
+          {type === "Task" ? <CheckSquare size={17} /> : <Calendar size={17}/>}
           {message}
         </div>
       </Link>

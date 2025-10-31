@@ -93,7 +93,7 @@ export const TodayOverview = [
     area: "Work",
     type: "Task",
     deadline: "today",
-    priority: "high",
+    priorty: "high",
     url: "dashboard/tasks",
   },
   {
@@ -101,7 +101,7 @@ export const TodayOverview = [
     area: "School",
     type: "Task",
     deadline: "tomorrow",
-    priority: "medium",
+    priorty: "medium",
     url: "dashboard/tasks",
   },
   {
@@ -109,7 +109,7 @@ export const TodayOverview = [
     area: "School",
     type: "Event",
     deadline: "Oct 31",
-    priority: "low",
+    priorty: "low",
     url: "dashboard/events",
   },
   {
@@ -117,7 +117,7 @@ export const TodayOverview = [
     area: "Career",
     type: "Event",
     deadline: "in two days",
-    priority: "high",
+    priorty: "high",
     url: "dashboard/events",
   },
   {
@@ -125,7 +125,7 @@ export const TodayOverview = [
     area: "Work",
     type: "Task",
     deadline: "this week",
-    priority: "medium",
+    priorty: "medium",
     url: "dashboard/tasks",
   },
 ];
@@ -134,25 +134,25 @@ export const recentupcomming = {
   Notes: [
     {
       title: "Sprint retrospective notes",
-      icon: <Clipboard size={18} />,
+      icon: <Clipboard size={17} />,
       date: "Oct 29, 2025",
       url: "dashboard/notes",
     },
     {
       title: "UI design brainstorm",
-      icon: <Clipboard size={18} />,
+      icon: <Clipboard size={17} />,
       date: "Oct 28, 2025",
       url: "dashboard/notes",
     },
     {
       title: "Reading summary: Atomic Habits",
-      icon: <Clipboard size={18} />,
+      icon: <Clipboard size={17} />,
       date: "Oct 26, 2025",
       url: "dashboard/notes",
     },
     {
       title: "Research outline for thesis",
-      icon: <Clipboard size={18} />,
+      icon: <Clipboard size={17} />,
       date: "Oct 24, 2025",
       url: "dashboard/notes",
     },
@@ -160,19 +160,19 @@ export const recentupcomming = {
   Projects: [
     {
       title: "Portfolio Website",
-      icon: <Box size={18} />,
+      icon: <Box size={17} />,
       date: "Due Nov 10, 2025",
       url: "dashboard/projects",
     },
     {
       title: "Mobile App Prototype",
-      icon: <Box size={18} />,
+      icon: <Box size={17} />,
       date: "Due Nov 22, 2025",
       url: "dashboard/projects",
     },
     {
       title: "Community Learning Platform",
-      icon: <Box size={18} />,
+      icon: <Box size={17} />,
       date: "Due Dec 1, 2025",
       url: "dashboard/projects",
     },
@@ -180,19 +180,19 @@ export const recentupcomming = {
   Tasks: [
     {
       title: "Refactor authentication module",
-      icon: <CheckSquare size={18} />,
+      icon: <CheckSquare size={17} />,
       date: "Today",
       url: "dashboard/tasks",
     },
     {
       title: "Send weekly progress report",
-      icon: <CheckSquare size={18} />,
+      icon: <CheckSquare size={17} />,
       date: "Tomorrow",
       url: "dashboard/tasks",
     },
     {
       title: "Test responsive layout",
-      icon: <CheckSquare size={18} />,
+      icon: <CheckSquare size={17} />,
       date: "Nov 2, 2025",
       url: "dashboard/tasks",
     },
@@ -200,19 +200,19 @@ export const recentupcomming = {
   Events: [
     {
       title: "Team Strategy Session",
-      icon: <Calendar size={18} />,
+      icon: <Calendar size={17} />,
       date: "Oct 31, 2025",
       url: "dashboard/events",
     },
     {
       title: "Hackathon Kickoff",
-      icon: <Calendar size={18} />,
+      icon: <Calendar size={17} />,
       date: "Nov 3, 2025",
       url: "dashboard/events",
     },
     {
       title: "End-of-semester review",
-      icon: <Calendar size={18} />,
+      icon: <Calendar size={17} />,
       date: "Nov 15, 2025",
       url: "dashboard/events",
     },
@@ -220,19 +220,19 @@ export const recentupcomming = {
   Resources: [
     {
       title: "UI Component Library Docs",
-      icon: <Database size={18} />,
+      icon: <Database size={17} />,
       date: "Updated Oct 29, 2025",
       url: "dashboard/resources",
     },
     {
       title: "Thesis Reference Papers",
-      icon: <Database size={18} />,
+      icon: <Database size={17} />,
       date: "Updated Oct 25, 2025",
       url: "dashboard/resources",
     },
     {
       title: "API Documentation",
-      icon: <Database size={18} />,
+      icon: <Database size={17} />,
       date: "Updated Oct 20, 2025",
       url: "dashboard/resources",
     },
