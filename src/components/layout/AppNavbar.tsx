@@ -17,8 +17,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { SidebarTrigger } from "../ui/sidebar";
-import NavItem from "../ui/nav-item";
-
+import { NavItem } from "../ui/nav-item";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const { setTheme } = useTheme();
@@ -26,7 +27,7 @@ export default function Navbar() {
   return (
     <nav className="p-4 flex items-center justify-between sticky top-0 z-50 bg-background/60 backdrop-blur-md">
       {/* LEFT */}
-      <NavItem icon={<SidebarTrigger />} />
+      <SidebarTrigger />
       {/* RIGHT */}
       <div className="flex items-center gap-2">
         <NavItem icon={<Search />} />
@@ -36,15 +37,15 @@ export default function Navbar() {
         <NavItem icon={<Bell />} />
         {/* THEME MENU */}
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <NavItem
-              icon={
-                <>
-                  <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                  <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-                </>
-              }
-            />
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
+              aria-label="Toggle theme"
+            >
+              <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+              <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+            </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" sideOffset={10}>
             <DropdownMenuItem onClick={() => setTheme("light")}>

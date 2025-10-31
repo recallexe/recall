@@ -4,7 +4,7 @@ import "@/app/globals.css";
 import AppSideBar from "@/components/layout/AppSidebar";
 import Navbar from "@/components/layout/AppNavbar";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 
 const geistSans = Geist({
@@ -30,25 +30,21 @@ export default async function DashboardLayout({
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
+    <div className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider defaultOpen={defaultOpen}>
-            <AppSideBar />
-            <main className="w-full">
-              <Navbar />
-              <div className="px-4">{children}</div>
-            </main>
-          </SidebarProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+        <SidebarProvider defaultOpen={defaultOpen}>
+          <AppSideBar />
+          <SidebarInset>
+            <Navbar />
+            <div className="px-4">{children}</div>
+          </SidebarInset>
+        </SidebarProvider>
+      </ThemeProvider>
+    </div>
   );
 }
