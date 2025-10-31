@@ -31,7 +31,7 @@ export default function RecentUpcoming() {
 
       {/* Content */}
       <div className="h-62 overflow-y-auto scrollbar-thin">
-        {data[activeTab].map((item, index) => (
+        {data[activeTab]?.map((item, index) => (
           <div
             key={index}
             className="flex justify-between py-2 border-b last:border-none"

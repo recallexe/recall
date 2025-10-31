@@ -52,7 +52,6 @@ export default function Dashboard() {
                   {TodayOverview.map((item, index) => (
                     <TodayOverviewList
                       key={index}
-                      icon={item.icon}
                       message={item.message}
                       area={item.area}
                       type={item.type}

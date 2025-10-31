@@ -156,6 +156,24 @@ export const recentupcomming = {
       date: "Oct 24, 2025",
       url: "dashboard/notes",
     },
+    {
+      title: "UI design brainstorm",
+      icon: <Clipboard size={17} />,
+      date: "Oct 28, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Reading summary: Atomic Habits",
+      icon: <Clipboard size={17} />,
+      date: "Oct 26, 2025",
+      url: "dashboard/notes",
+    },
+    {
+      title: "Research outline for thesis",
+      icon: <Clipboard size={17} />,
+      date: "Oct 24, 2025",
+      url: "dashboard/notes",
+    },
   ],
   Projects: [
     {
