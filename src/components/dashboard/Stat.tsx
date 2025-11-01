@@ -36,7 +36,7 @@ export default function Stat({
 
       {/* SECOND ROW */}
       <div className="flex items-end justify-between">
-        <h2 className="text-3xl text-blue-500 mb-[-5px]">{value}</h2>
+        <h2 className="text-3xl text-primary mb-[-5px]">{value}</h2>
         <p className="text-sm">{change}</p>
       </div>
     </div>

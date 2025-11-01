@@ -13,7 +13,7 @@ import { chartData } from "@/app/lib/data";
 const chartConfig = {
   performance: {
     label: "Performance",
-    color: "#2563eb",
+    color: "var(--primary)",
   },
 } satisfies ChartConfig;
 

@@ -42,7 +42,14 @@ export default function AppSidebar() {
 
   const isActiveUrl = (url: string) => pathname === url;
 
-  const workspaceItems = ["Dashboard", "Areas", "Projects", "Tasks", "Notes", "Events"];
+  const workspaceItems = [
+    "Dashboard",
+    "Areas",
+    "Projects",
+    "Tasks",
+    "Notes",
+    "Events",
+  ];
   const libraryItems = ["Resources"];
   const moreItems = ["Calendar", "Archive"];
 
@@ -92,7 +99,8 @@ export default function AppSidebar() {
                   const badge = getBadgeFor(item.title);
 
                   if (hasSubmenu) {
-                    const subs = (sample as Record<string, string[]>)[item.key] || [];
+                    const subs =
+                      (sample as Record<string, string[]>)[item.key] || [];
                     const defaultOpen = pathname.startsWith(item.url);
                     return (
                       <CollapsibleMenuItem
@@ -214,7 +222,11 @@ function MenuItem({
           before:w-1 before:bg-linear-to-b before:from-primary before:to-primary/60
           before:opacity-0 before:scale-y-0 before:-translate-x-1
           before:transition-all before:duration-300 before:ease-out
-          ${isActive ? 'before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50' : 'bg-transparent'}
+          ${
+            isActive
+              ? "before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50"
+              : "bg-transparent"
+          }
           hover:bg-sidebar-accent/50 active:scale-[0.98]
           after:content-[''] after:absolute after:inset-0 after:bg-linear-to-r 
           after:from-transparent after:via-primary/5 after:to-transparent
@@ -223,16 +235,24 @@ function MenuItem({
         `}
       >
         <Link href={url} className="flex items-center gap-3 w-full group/link">
-          <Icon className={`
+          <Icon
+            className={`
             h-4 w-4 transition-all duration-200 
             group-hover/link:scale-110
-            ${isActive ? 'text-primary' : 'text-muted-foreground group-hover/link:text-foreground'}
-          `} />
-          <span className={`
+            ${
+              isActive
+                ? "text-primary"
+                : "text-muted-foreground group-hover/link:text-foreground"
+            }
+          `}
+          />
+          <span
+            className={`
             transition-all duration-200 font-medium
-            ${isActive ? 'text-primary' : 'text-foreground'}
+            ${isActive ? "text-primary" : "text-foreground"}
             group-hover/link:translate-x-0.5
-          `}>
+          `}
+          >
             {title}
           </span>
         </Link>
@@ -280,7 +300,11 @@ function CollapsibleMenuItem({
               before:w-1 before:bg-linear-to-b before:from-primary before:to-primary/60
               before:opacity-0 before:scale-y-0 before:-translate-x-1
               before:transition-all before:duration-300 before:ease-out
-              ${isActive ? 'before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50' : 'bg-transparent'}
+              ${
+                isActive
+                  ? "before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50"
+                  : "bg-transparent"
+              }
               hover:bg-sidebar-accent/50 active:scale-[0.98]
               after:content-[''] after:absolute after:inset-0 after:bg-linear-to-r 
               after:from-transparent after:via-primary/5 after:to-transparent
@@ -288,17 +312,28 @@ function CollapsibleMenuItem({
               hover:after:translate-x-full
             `}
         >
-          <Link href={item.url} className="flex items-center gap-3 w-full group/link">
-            <Icon className={`
+          <Link
+            href={item.url}
+            className="flex items-center gap-3 w-full group/link"
+          >
+            <Icon
+              className={`
                h-4 w-4 transition-all duration-200 
                group-hover/link:scale-110
-               ${isActive ? 'text-primary' : 'text-muted-foreground group-hover/link:text-foreground'}
-             `} />
-            <span className={`
+               ${
+                 isActive
+                   ? "text-primary"
+                   : "text-muted-foreground group-hover/link:text-foreground"
+               }
+             `}
+            />
+            <span
+              className={`
                 transition-all duration-200 font-medium
-                ${isActive ? 'text-primary' : 'text-foreground'}
+                ${isActive ? "text-primary" : "text-foreground"}
                 group-hover/link:translate-x-0.5
-              `}>
+              `}
+            >
               {item.title}
             </span>
           </Link>
@@ -331,7 +366,10 @@ function CollapsibleMenuItem({
                   asChild
                   className="transition-all duration-200 bg-transparent hover:bg-sidebar-accent/50 hover:translate-x-1 ml-4"
                 >
-                  <Link href="#" className="transition-all duration-200 group/sublink">
+                  <Link
+                    href="#"
+                    className="transition-all duration-200 group/sublink"
+                  >
                     <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover/sublink:bg-primary transition-all duration-200" />
                     <span className="text-muted-foreground group-hover/sublink:text-foreground group-hover/sublink:translate-x-0.5 transition-all duration-200">
                       {subItem}

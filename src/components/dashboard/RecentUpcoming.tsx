@@ -19,7 +19,7 @@ export default function RecentUpcoming() {
             key={tab}
             className={`cursor-pointer px-3 py-1 rounded-full transition-colors ${
               activeTab === tab
-                ? "bg-blue-500 my-1 mx-[-15] px-4 text-sm text-white"
+                ? "bg-primary my-1 mx-[-15] px-4 text-sm text-white"
                 : "hover:bg-muted hover:text-foreground/80 mx-[-15] px-4"
             }`}
             onClick={() => setActiveTab(tab)}
