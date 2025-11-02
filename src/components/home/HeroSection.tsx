@@ -8,8 +8,8 @@ export function HeroSection() {
   const isDev = process.env.NODE_ENV === "development";
 
   return (
-    <section className="flex flex-col items-center space-y-6 text-center overflow-y-auto px-4">
-      <div className="pt-35 space-y-6">
+    <section className="flex flex-col items-center space-y-8 text-center overflow-y-auto px-4">
+      <div className="pt-35 space-y-8">
         <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
           Remember everything.
         </h1>
@@ -38,8 +38,8 @@ export function HeroSection() {
         )}
       </div>
 
-      <Image className="dark:hidden" alt="Hero image" width={1100} height={400} src="/hero-light.png" />
-      <Image className="hidden dark:block" alt="Hero image" width={1100} height={400} src="/hero-dark.png" />
+      <Image className="dark:hidden" alt="Hero image" width={1300} height={400} src="/hero-light.png" />
+      <Image className="hidden dark:block" alt="Hero image" width={1300} height={400} src="/hero-dark.png" />
     </section>
   );
 }
