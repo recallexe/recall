@@ -8,7 +8,7 @@ export function HeroSection() {
   const isDev = process.env.NODE_ENV === "development";
 
   return (
-    <section className="flex flex-col items-center space-y-6 text-center overflow-y-auto">
+    <section className="flex flex-col items-center space-y-6 text-center overflow-y-auto px-4">
       <div className="pt-35 space-y-6">
         <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
           Remember everything.
