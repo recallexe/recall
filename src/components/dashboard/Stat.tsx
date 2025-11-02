@@ -1,6 +1,7 @@
 import React from "react";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { Card } from "../ui/card";
 
 type StatProps = {
   title: string;
@@ -20,9 +21,7 @@ export default function Stat({
   bgcolor,
 }: StatProps) {
   return (
-    <div
-      className={`flex flex-col gap-4 p-4 rounded-lg border-2 hover:shadow-md transition`}
-    >
+    <Card className={`flex flex-col gap-4 p-4 hover:shadow-md transition`}>
       {/* FIRST ROW */}
       <div className="flex items-center justify-between">
         <Link href={url}>
@@ -39,6 +38,6 @@ export default function Stat({
         <h2 className="text-3xl text-primary mb-[-5px]">{value}</h2>
         <p className="text-sm">{change}</p>
       </div>
-    </div>
+    </Card>
   );
 }
