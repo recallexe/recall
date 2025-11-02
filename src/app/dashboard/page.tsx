@@ -71,11 +71,11 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
               {/* Third Row */}
-              <Card>
+              <Card className="flex flex-col">
                 <CardHeader>
                   <CardTitle>Weekly Performance</CardTitle>
                 </CardHeader>
-                <CardContent className="h-75">
+                <CardContent className="flex-1 flex items-end min-h-[200px] pb-0">
                   <Chart />
                 </CardContent>
               </Card>
