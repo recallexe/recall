@@ -11,14 +11,14 @@ export default function Project() {
       <div className="grid grid-flow-col auto-cols-[350px] h-[calc(100vh-100px)] gap-4 overflow-x-auto mt-4">
         {Object.entries(projects).map(([status, list]) => (
           <div key={status}>
-            <div className="flex flex-row items-center font-semibold gap-4 mb-4 sticky top-0 z-50 bg-background/90 backdrop-blur-md">
+            <div className="flex flex-row items-center font-semibold gap-4 mb-4 sticky top-0 z-50">
               <Card
                 className={cn(
-                  "rounded-full py-0 px-4 w-fit text-black",
-                  status === "Inbox" && "bg-red-200",
-                  status === "Planned" && "bg-blue-200",
-                  status === "Progress" && "bg-yellow-200",
-                  status === "Done" && "bg-green-200"
+                  "rounded-full py-0 px-4 w-fit",
+                  status === "Inbox" && "bg-red-200 text-red-900",
+                  status === "Planned" && "bg-blue-200 text-blue-900",
+                  status === "Progress" && "bg-yellow-200 text-yellow-900",
+                  status === "Done" && "bg-green-200 text-green-900"
                 )}
               >
                 <h2>{status === "Progress" ? "In Progress" : status}</h2>
