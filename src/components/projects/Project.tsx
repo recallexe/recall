@@ -3,12 +3,13 @@ import { projects } from "@/app/lib/data";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Folder, Plus } from "lucide-react";
+import { Button } from "../ui/button";
 
 export default function Project() {
   return (
     <>
       {/* Scrollable grid container */}
-      <div className="grid grid-flow-col auto-cols-[350px] h-[calc(100vh-100px)] gap-4 overflow-x-auto mt-4">
+      <div className="grid grid-flow-col auto-cols-[340px] h-[calc(100vh-100px)] gap-4 overflow-x-auto mt-4">
         {Object.entries(projects).map(([status, list]) => (
           <div key={status}>
             <div className="flex flex-row items-center font-semibold gap-4 mb-4 sticky top-0 z-50">
@@ -28,7 +29,10 @@ export default function Project() {
             </div>
             <div className="flex flex-col gap-4 mt-2">
               {list.map((project) => (
-                <Card key={project.id} className="p-4 space-y-3">
+                <Card
+                  key={project.id}
+                  className="p-4 space-y-3 hover:shadow-md transition"
+                >
                   <div className="flex items-center gap-2">
                     <Folder color="var(--primary)" size={20} />
                     <h3 className="text-lg">{project.title}</h3>
@@ -60,10 +64,13 @@ export default function Project() {
                   </div>
                 </Card>
               ))}
-              <Card className="flex flex-row items-center p-4">
+              <Button
+                variant="outline"
+                className="flex flex-row items-center p-4"
+              >
                 <Plus />
-                <span>New</span>
-              </Card>
+                New Project
+              </Button>
             </div>
           </div>
         ))}
