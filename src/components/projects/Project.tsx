@@ -60,6 +60,10 @@ export default function Project() {
                   </div>
                 </Card>
               ))}
+              <Card className="flex flex-row items-center p-4">
+                <Plus />
+                <span>New</span>
+              </Card>
             </div>
           </div>
         ))}

@@ -41,7 +41,7 @@ export default async function DashboardLayout({
       >
         <SidebarProvider defaultOpen={defaultOpen}>
           <AppSideBar />
-          <SidebarInset className="overflow-hidden">
+          <SidebarInset className="overflow-x-hidden">
             <Navbar />
             <div>{children}</div>
           </SidebarInset>
