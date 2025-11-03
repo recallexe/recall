@@ -76,20 +76,20 @@ export default function Project() {
                   className="p-4 space-y-3 hover:shadow-md transition"
                 >
                   {/* Project Header: Folder Icon + Title */}
-                  <div className="flex items-center gap-2">
-                    <Folder color="var(--primary)" size={20} />
+                  <div className="flex items-center gap-2 font-semibold">
+                    <Folder color="var(--primary)" size={18} />
                     <Link href="/dashboard/projects">
-                      <h3 className="text-lg">{project.title}</h3>
+                      <h3>{project.title}</h3>
                     </Link>
                   </div>
 
                   {/* Project Description */}
-                  <p>{project.description}</p>
+                  <p className="text-muted-foreground">{project.description}</p>
 
                   {/* Project Footer: Date Range + Priority Badge */}
                   <div className="flex items-center flex-row justify-between">
                     {/* Date Range (Start → End) */}
-                    <div className="flex text-muted-foreground items-center gap-2 text-md">
+                    <div className="flex text-muted-foreground items-center gap-2 text-sm">
                       <p>{project.startDate}</p>
                       <ArrowRight size={15} />
                       <p>{project.endDate}</p>
