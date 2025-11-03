@@ -1,3 +1,6 @@
+// ============================================================================
+// IMPORTS
+// ============================================================================
 import Project from "@/components/projects/Project";
 import {
   Breadcrumb,
@@ -8,10 +11,19 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
+// ============================================================================
+// PROJECTS PAGE
+// ============================================================================
+/**
+ * Projects page component that displays the kanban board with project cards
+ * organized by status (Inbox, Planned, Progress, Done).
+ */
 export default function Page() {
   return (
     <div className="mx-4 mb-4">
-      {/* Fixed Breadcrumb */}
+      {/* ==================================================================== */}
+      {/* BREADCRUMB NAVIGATION */}
+      {/* ==================================================================== */}
       <div>
         <Breadcrumb>
           <BreadcrumbList>
@@ -29,6 +41,10 @@ export default function Page() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
+
+      {/* ==================================================================== */}
+      {/* PROJECT KANBAN BOARD */}
+      {/* ==================================================================== */}
       <Project />
     </div>
   );

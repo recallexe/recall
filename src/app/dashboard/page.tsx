@@ -1,3 +1,6 @@
+// ============================================================================
+// IMPORTS
+// ============================================================================
 import Stat from "@/components/dashboard/Stat";
 import {
   Breadcrumb,
@@ -12,12 +15,28 @@ import TodayOverviewList from "@/components/dashboard/TodaysOverview";
 import RecentUpcoming from "@/components/dashboard/RecentUpcoming";
 import { Chart } from "@/components/dashboard/AppChart";
 import TodaysSchedule from "@/components/dashboard/Today'sSchedule";
+
+// ============================================================================
+// DASHBOARD PAGE
+// ============================================================================
+/**
+ * Main dashboard page component that displays:
+ * - Statistics cards (Areas, Projects, Tasks, Events, Notes, Resources)
+ * - Today's Overview list
+ * - Recent/Upcoming items
+ * - Weekly Performance chart
+ * - Today's Schedule
+ */
 export default function Dashboard() {
   return (
     <>
-      {/* CONTAINER */}
+      {/* ==================================================================== */}
+      {/* MAIN CONTAINER */}
+      {/* ==================================================================== */}
       <main className="mx-4 mb-4">
-        {/* BREADCRUMB */}
+        {/* ================================================================ */}
+        {/* BREADCRUMB NAVIGATION */}
+        {/* ================================================================ */}
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -27,9 +46,16 @@ export default function Dashboard() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        {/* ================================================================ */}
+        {/* DASHBOARD CONTENT */}
+        {/* ================================================================ */}
         <section>
           <div className="mt-4 flex flex-col gap-4">
-            {/* Frist Row */}
+            {/* ============================================================ */}
+            {/* FIRST ROW: STATISTICS CARDS */}
+            {/* ============================================================ */}
+            {/* Grid of stat cards showing counts for Areas, Projects, Tasks, etc. */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
               {Object.values(stats).map((item, index) => (
                 <Stat
@@ -42,13 +68,18 @@ export default function Dashboard() {
                 />
               ))}
             </div>
-            {/* Second Row */}
+
+            {/* ============================================================ */}
+            {/* SECOND ROW: CONTENT CARDS */}
+            {/* ============================================================ */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {/* Today's Overview Card */}
               <Card>
                 <CardHeader>
                   <CardTitle>Today's Overview</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2 h-75 overflow-y-auto scrollbar-thin">
+                  {/* Today's Overview Items List */}
                   {TodayOverview.map((item, index) => (
                     <TodayOverviewList
                       key={index}
@@ -62,6 +93,8 @@ export default function Dashboard() {
                   ))}
                 </CardContent>
               </Card>
+
+              {/* Recent/Upcoming Card */}
               <Card>
                 <CardHeader>
                   <CardTitle>Recent/Upcomming</CardTitle>
@@ -70,7 +103,11 @@ export default function Dashboard() {
                   <RecentUpcoming />
                 </CardContent>
               </Card>
-              {/* Third Row */}
+
+              {/* ========================================================== */}
+              {/* THIRD ROW: PERFORMANCE & SCHEDULE */}
+              {/* ========================================================== */}
+              {/* Weekly Performance Chart Card */}
               <Card className="flex flex-col">
                 <CardHeader>
                   <CardTitle>Weekly Performance</CardTitle>
@@ -79,6 +116,8 @@ export default function Dashboard() {
                   <Chart />
                 </CardContent>
               </Card>
+
+              {/* Today's Schedule Card */}
               <Card>
                 <CardHeader>
                   <CardTitle>Today's Schedule</CardTitle>
