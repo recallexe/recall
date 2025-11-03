@@ -30,7 +30,9 @@ export default async function DashboardLayout({
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
   return (
-    <div className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}>
+    <div
+      className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
+    >
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
@@ -39,9 +41,9 @@ export default async function DashboardLayout({
       >
         <SidebarProvider defaultOpen={defaultOpen}>
           <AppSideBar />
-          <SidebarInset>
+          <SidebarInset className="overflow-hidden">
             <Navbar />
-            <div className="overflow-hidden">{children}</div>
+            <div>{children}</div>
           </SidebarInset>
         </SidebarProvider>
       </ThemeProvider>

@@ -31,17 +31,17 @@ export default function TodayOverviewList({
         {area} • {type} • {`Due ${deadline}`} •
         <div>
           {priorty === "high" && (
-            <div className="bg-red-400 px-2 rounded-full text-black text-xs">
+            <div className="bg-red-300 px-2 rounded-full text-red-800 text-xs">
               High
             </div>
           )}
           {priorty === "medium" && (
-            <div className="bg-yellow-300 px-2 rounded-full text-black text-xs">
+            <div className="bg-yellow-200 px-2 rounded-full text-yellow-800 text-xs">
               Medium
             </div>
           )}
           {priorty === "low" && (
-            <div className="bg-green-400 px-2 rounded-full text-black text-xs">
+            <div className="bg-green-200 px-2 rounded-full text-green-800 text-xs">
               Low
             </div>
           )}
