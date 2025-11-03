@@ -41,7 +41,7 @@ export default async function DashboardLayout({
           <AppSideBar />
           <SidebarInset>
             <Navbar />
-            <div className="px-4">{children}</div>
+            <div className="overflow-hidden">{children}</div>
           </SidebarInset>
         </SidebarProvider>
       </ThemeProvider>

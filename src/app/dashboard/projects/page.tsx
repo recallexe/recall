@@ -1,5 +1,4 @@
-
-
+import Project from "@/components/projects/Project";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,21 +7,29 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-export default function Projects() {
+
+export default function Page() {
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>
-            <BreadcrumbLink href="/dashboard/projects">Projects</BreadcrumbLink>
-          </BreadcrumbPage>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
+    <div className="mx-4 mb-4">
+      {/* Fixed Breadcrumb */}
+      <div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>
+                <BreadcrumbLink href="/dashboard/projects">
+                  Projects
+                </BreadcrumbLink>
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+      <Project />
+    </div>
   );
 }
-

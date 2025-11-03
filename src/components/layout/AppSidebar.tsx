@@ -54,7 +54,7 @@ export default function AppSidebar() {
   const moreItems = ["Calendar", "Archive"];
 
   return (
-    <Sidebar variant="inset" collapsible="icon">
+    <Sidebar variant="inset" collapsible="icon" className="bg-background">
       <SidebarRail />
 
       {/* HEADER */}

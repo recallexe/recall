@@ -305,3 +305,101 @@ export const schedule = [
     location: "Home Office",
   },
 ];
+
+export const projects = {
+  Inbox: [
+    {
+      id: 1,
+      title: "New Landing Page",
+      description:
+        "Design concepts and hero layout for the new marketing site.",
+      due: "2025-11-10",
+      priority: "High",
+      tags: ["design", "UI", "marketing"],
+    },
+    {
+      id: 2,
+      title: "Data Migration Plan",
+      description:
+        "Draft plan for migrating data to the new PostgreSQL cluster.",
+      due: "2025-11-14",
+      priority: "Medium",
+      tags: ["backend", "infra"],
+    },
+    {
+      id: 3,
+      title: "Data Migration Plan",
+      description:
+        "Draft plan for migrating data to the new PostgreSQL cluster.",
+      due: "2025-11-14",
+      priority: "Medium",
+      tags: ["backend", "infra"],
+    },
+    {
+      id: 4,
+      title: "Data Migration Plan",
+      description:
+        "Draft plan for migrating data to the new PostgreSQL cluster.",
+      due: "2025-11-14",
+      priority: "Medium",
+      tags: ["backend", "infra"],
+    },
+  ],
+  Planned: [
+    {
+      id: 5,
+      title: "Mobile App Prototype",
+      description: "Low-fidelity wireframes for the v2 mobile experience.",
+      due: "2025-12-01",
+      priority: "High",
+      tags: ["mobile", "ux"],
+    },
+    {
+      id: 6,
+      title: "Accessibility Audit",
+      description: "Run accessibility tests across all major user flows.",
+      due: "2025-11-20",
+      priority: "Low",
+      tags: ["frontend", "a11y"],
+    },
+  ],
+  Progress: [
+    {
+      id: 7,
+      title: "Recall Redesign",
+      description:
+        "Revamping the dashboard UI using Tailwind and shadcn components.",
+      due: "2025-11-07",
+      priority: "High",
+      tags: ["UI", "React", "design-system"],
+    },
+    {
+      id: 8,
+      title: "Thesis Sync Integration",
+      description:
+        "Connect academic document sync service with project dashboard.",
+      due: "2025-11-15",
+      priority: "Medium",
+      tags: ["integration", "api"],
+    },
+  ],
+  Done: [
+    {
+      id: 9,
+      title: "Team Onboarding Guide",
+      description:
+        "Created internal wiki and onboarding flow for new team members.",
+      due: "2025-10-22",
+      priority: "Low",
+      tags: ["documentation", "team"],
+    },
+    {
+      id: 10,
+      title: "CI/CD Setup",
+      description: "Configured GitHub Actions and Docker for automated builds.",
+      due: "2025-10-30",
+      priority: "High",
+      tags: ["devops", "automation"],
+    },
+  ],
+};

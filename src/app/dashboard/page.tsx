@@ -15,18 +15,18 @@ import TodaysSchedule from "@/components/dashboard/Today'sSchedule";
 export default function Dashboard() {
   return (
     <>
-      {/* BREADCRUMB */}
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbPage>
-              <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-            </BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
       {/* CONTAINER */}
-      <main className="mb-4">
+      <main className="mx-4 mb-4">
+        {/* BREADCRUMB */}
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbPage>
+                <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <section>
           <div className="mt-4 flex flex-col gap-4">
             {/* Frist Row */}

@@ -14,7 +14,7 @@ import { ThemeToggle } from "../ui/theme-toggle";
 export default function Navbar() {
 
   return (
-    <nav className="p-4 flex items-center justify-between sticky top-0 z-50 bg-background/60 backdrop-blur-md">
+    <nav className="p-2 flex items-center justify-between sticky top-0 z-50 bg-background/60 backdrop-blur-md">
       {/* LEFT */}
       <SidebarTrigger />
       {/* RIGHT */}
