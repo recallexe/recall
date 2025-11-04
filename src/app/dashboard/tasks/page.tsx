@@ -8,18 +8,16 @@ import {
 } from "@/components/ui/breadcrumb";
 export default function Tasks() {
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>
-            <BreadcrumbLink href="/dashboard/tasks">Tasks</BreadcrumbLink>
-          </BreadcrumbPage>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
+    <div className="ml-4">
+      <Breadcrumb>
+        <BreadcrumbList className="text-2xl">
+          <BreadcrumbItem>
+            <BreadcrumbPage>
+              <BreadcrumbLink href="/dashboard/tasks">Tasks</BreadcrumbLink>
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    </div>
   );
 }

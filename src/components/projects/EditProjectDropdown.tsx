@@ -2,11 +2,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Delete, Edit, Trash } from "lucide-react";
+import { NewProjectDialog } from "./NewProjectDialog";
 
 export default function EditProjectDropdown({
   triger,

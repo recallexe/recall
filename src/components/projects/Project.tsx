@@ -36,18 +36,18 @@ export default function Project() {
             {/* STATUS HEADER */}
             {/* ============================================================ */}
             {/* Sticky header with status badge, project count, and add button */}
-            <div className="flex flex-row items-center font-semibold gap-4 mb- sticky top-0 z-50">
+            <div className="flex flex-row items-center font-semibold gap-4 sticky top-0 z-50">
               {/* Status Badge */}
               <div
                 className={cn(
-                  "rounded-full py-0 px-3 w-fit",
+                  "rounded-xs py-0 px-3 w-fit",
                   status === "Inbox" && "bg-red-200 text-red-900",
                   status === "Planned" && "bg-blue-200 text-blue-900",
                   status === "Progress" && "bg-yellow-200 text-yellow-900",
                   status === "Done" && "bg-green-200 text-green-900"
                 )}
               >
-                <h2>{status === "Progress" ? "In Progress" : status}</h2>
+                <h2>{status === "Progress" ? "In progress" : status}</h2>
               </div>
               {/* Project Count */}
               <div>{list.length}</div>
@@ -137,7 +137,7 @@ export default function Project() {
                 triger={
                   <Button
                     variant="outline"
-                    className="flex flex-row items-center p-4 w-[340px]"
+                    className="flex w-full flex-row items-center p-4"
                   >
                     <Plus className="mr-2" />
                     New Project

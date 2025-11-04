@@ -38,7 +38,7 @@ export default function Dashboard() {
         {/* BREADCRUMB NAVIGATION */}
         {/* ================================================================ */}
         <Breadcrumb>
-          <BreadcrumbList>
+          <BreadcrumbList className="text-2xl">
             <BreadcrumbItem>
               <BreadcrumbPage>
                 <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>

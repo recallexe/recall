@@ -26,11 +26,7 @@ export default function Page() {
       {/* ==================================================================== */}
       <div>
         <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
+          <BreadcrumbList className="text-2xl">
             <BreadcrumbItem>
               <BreadcrumbPage>
                 <BreadcrumbLink href="/dashboard/projects">
