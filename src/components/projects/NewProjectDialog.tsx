@@ -37,7 +37,7 @@ import { Textarea } from "@/components/ui/textarea";
  * AppDialog component - Modal dialog for adding/editing projects.
  * Accepts a custom trigger element as a prop.
  */
-export function AppDialog({triger}: {triger:React.ReactNode}) {
+export function NewProjectDialog({triger}: {triger:React.ReactNode}) {
   return (
     <Dialog>
       <form>

@@ -316,6 +316,7 @@ export const projects = {
       startDate: "2025-11-01",
       endDate: "2025-11-10",
       priority: "High",
+      area: "Work",
     },
     {
       id: 2,
@@ -325,6 +326,7 @@ export const projects = {
       startDate: "2025-11-05",
       endDate: "2025-11-14",
       priority: "Medium",
+      area: "Work",
     },
     {
       id: 3,
@@ -333,6 +335,7 @@ export const projects = {
       startDate: "2025-11-06",
       endDate: "2025-11-15",
       priority: "Medium",
+      area: "Learning",
     },
     {
       id: 4,
@@ -341,6 +344,7 @@ export const projects = {
       startDate: "2025-11-03",
       endDate: "2025-11-13",
       priority: "Medium",
+      area: "Personal",
     },
   ],
   Planned: [
@@ -351,6 +355,7 @@ export const projects = {
       startDate: "2025-11-15",
       endDate: "2025-12-01",
       priority: "High",
+      area: "Learning",
     },
     {
       id: 6,
@@ -359,14 +364,17 @@ export const projects = {
       startDate: "2025-11-10",
       endDate: "2025-11-20",
       priority: "Low",
+      area: "Work",
     },
     {
       id: 7,
-      title: "Accessibility Audit",
-      description: "Run accessibility tests across all major user flows.",
-      startDate: "2025-11-10",
-      endDate: "2025-11-20",
-      priority: "Low",
+      title: "Performance Optimization",
+      description:
+        "Improve Lighthouse performance score and reduce bundle size.",
+      startDate: "2025-11-12",
+      endDate: "2025-11-25",
+      priority: "Medium",
+      area: "Personal",
     },
   ],
   Progress: [
@@ -378,6 +386,7 @@ export const projects = {
       startDate: "2025-10-30",
       endDate: "2025-11-07",
       priority: "High",
+      area: "Work",
     },
     {
       id: 9,
@@ -387,6 +396,7 @@ export const projects = {
       startDate: "2025-11-02",
       endDate: "2025-11-15",
       priority: "Medium",
+      area: "Learning",
     },
   ],
   Done: [
@@ -398,6 +408,7 @@ export const projects = {
       startDate: "2025-10-10",
       endDate: "2025-10-22",
       priority: "Low",
+      area: "Work",
     },
     {
       id: 11,
@@ -406,6 +417,7 @@ export const projects = {
       startDate: "2025-10-15",
       endDate: "2025-10-30",
       priority: "High",
+      area: "Learning",
     },
   ],
 };

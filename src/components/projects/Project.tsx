@@ -5,10 +5,11 @@ import { projects } from "@/app/lib/data";
 
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Folder, Plus } from "lucide-react";
+import { ArrowRight, Box, Folder, MoreHorizontal, Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { AppDialog } from "./AppDialog";
+import { NewProjectDialog } from "./NewProjectDialog";
+import EditProjectDropdown from "./EditProjectDropdown";
 
 // ============================================================================
 // PROJECT COMPONENT
@@ -35,11 +36,11 @@ export default function Project() {
             {/* STATUS HEADER */}
             {/* ============================================================ */}
             {/* Sticky header with status badge, project count, and add button */}
-            <div className="flex flex-row items-center font-semibold gap-4 mb-4 sticky top-0 z-50">
+            <div className="flex flex-row items-center font-semibold gap-4 mb- sticky top-0 z-50">
               {/* Status Badge */}
               <div
                 className={cn(
-                  "rounded-full py-0 px-4 w-fit",
+                  "rounded-full py-0 px-3 w-fit",
                   status === "Inbox" && "bg-red-200 text-red-900",
                   status === "Planned" && "bg-blue-200 text-blue-900",
                   status === "Progress" && "bg-yellow-200 text-yellow-900",
@@ -51,15 +52,13 @@ export default function Project() {
               {/* Project Count */}
               <div>{list.length}</div>
               {/* Add Project Button (Quick) */}
-              <Button variant="ghost">
-                <AppDialog
-                  triger={
-                    <Button variant="ghost" size="icon">
-                      <Plus size={22} />
-                    </Button>
-                  }
-                />
-              </Button>
+              <NewProjectDialog
+                triger={
+                  <Button variant="ghost" size="icon">
+                    <Plus size={22} />
+                  </Button>
+                }
+              />
             </div>
 
             {/* ============================================================ */}
@@ -73,18 +72,32 @@ export default function Project() {
               {list.map((project) => (
                 <Card
                   key={project.id}
-                  className="p-4 space-y-3 hover:shadow-md transition"
+                  className="p-4 space-y-1 hover:shadow-md transition"
                 >
                   {/* Project Header: Folder Icon + Title */}
-                  <div className="flex items-center gap-2 font-semibold">
-                    <Folder color="var(--primary)" size={18} />
-                    <Link href="/dashboard/projects">
-                      <h3>{project.title}</h3>
-                    </Link>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 font-semibold">
+                      <Box color="var(--primary)" size={20} strokeWidth={2.5} />
+                      <Link href="/dashboard/projects">
+                        <h3>{project.title}</h3>
+                      </Link>
+                    </div>
+                    <EditProjectDropdown
+                      triger={
+                        <Button size="icon" variant="ghost">
+                          <MoreHorizontal />
+                        </Button>
+                      }
+                    />
                   </div>
 
                   {/* Project Description */}
                   <p className="text-muted-foreground">{project.description}</p>
+                  {/* Project Areas */}
+                  <div className="flex items-center gap-2">
+                    <Folder size={17} />
+                    {project.area}
+                  </div>
 
                   {/* Project Footer: Date Range + Priority Badge */}
                   <div className="flex items-center flex-row justify-between">
@@ -120,7 +133,7 @@ export default function Project() {
               {/* ========================================================== */}
               {/* ADD NEW PROJECT DIALOG (Bottom of Column) */}
               {/* ========================================================== */}
-              <AppDialog
+              <NewProjectDialog
                 triger={
                   <Button
                     variant="outline"
