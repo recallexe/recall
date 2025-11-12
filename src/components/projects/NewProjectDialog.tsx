@@ -41,6 +41,7 @@ interface Area {
 interface NewProjectDialogProps {
   trigger?: React.ReactNode;
   defaultStatus?: string;
+  defaultAreaId?: string;
   onSuccess?: () => void;
   project?: {
     id: string;
@@ -59,14 +60,14 @@ interface NewProjectDialogProps {
 const STATUSES = ["Inbox", "Planned", "Progress", "Done"] as const;
 const PRIORITIES = ["High", "Medium", "Low"] as const;
 
-export function NewProjectDialog({ trigger, defaultStatus = "Inbox", onSuccess, project, open: controlledOpen, onOpenChange: controlledOnOpenChange }: NewProjectDialogProps) {
+export function NewProjectDialog({ trigger, defaultStatus = "Inbox", defaultAreaId, onSuccess, project, open: controlledOpen, onOpenChange: controlledOnOpenChange }: NewProjectDialogProps) {
   const [internalOpen, setInternalOpen] = React.useState(false);
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
   const setOpen = controlledOnOpenChange || setInternalOpen;
   const [areas, setAreas] = React.useState<Area[]>([]);
   const [title, setTitle] = React.useState(project?.title || "");
   const [description, setDescription] = React.useState(project?.description || "");
-  const [areaId, setAreaId] = React.useState(project?.area_id || "");
+  const [areaId, setAreaId] = React.useState(project?.area_id || defaultAreaId || "");
   const [status, setStatus] = React.useState(project?.status || defaultStatus);
   const [priority, setPriority] = React.useState(project?.priority || "");
   const [startDate, setStartDate] = React.useState<Date | undefined>(
@@ -91,7 +92,9 @@ export function NewProjectDialog({ trigger, defaultStatus = "Inbox", onSuccess, 
         const areasData = JSON.parse(responseJson);
         setAreas(areasData);
         if (areasData.length > 0 && !project && !hasInitializedAreaId.current) {
-          setAreaId(areasData[0].id);
+          // Use defaultAreaId if provided, otherwise use first area
+          const initialAreaId = defaultAreaId || areasData[0].id;
+          setAreaId(initialAreaId);
           hasInitializedAreaId.current = true;
         }
       } catch (err) {
@@ -113,7 +116,7 @@ export function NewProjectDialog({ trigger, defaultStatus = "Inbox", onSuccess, 
       } else {
         setTitle("");
         setDescription("");
-        setAreaId("");
+        setAreaId(defaultAreaId || "");
         setStatus(defaultStatus);
         setPriority("");
         setStartDate(undefined);
@@ -124,7 +127,7 @@ export function NewProjectDialog({ trigger, defaultStatus = "Inbox", onSuccess, 
     } else {
       hasInitializedAreaId.current = false;
     }
-  }, [open, project, defaultStatus]);
+  }, [open, project, defaultStatus, defaultAreaId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

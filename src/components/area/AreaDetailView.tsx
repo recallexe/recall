@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import {
     Breadcrumb,
@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Folder, ArrowLeft, Box, Loader2 } from "lucide-react";
+import { Folder, ArrowLeft, Box, Loader2, Plus } from "lucide-react";
+import { NewProjectDialog } from "@/components/projects/NewProjectDialog";
 
 async function tauriInvoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
     try {
@@ -58,34 +59,34 @@ export default function AreaDetailView({ area }: AreaDetailViewProps) {
     const [loadingProjects, setLoadingProjects] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchProjects = async () => {
-            setLoadingProjects(true);
-            setError(null);
-            try {
-                const token = localStorage.getItem("auth_token");
-                if (!token) {
-                    setError("Not authenticated");
-                    return;
-                }
-
-                const responseJson = await tauriInvoke<string>("get_projects", {
-                    token,
-                    area_id: area.id,
-                });
-                const projectsData = JSON.parse(responseJson);
-                setProjects(projectsData);
-            } catch (err: unknown) {
-                console.error("Error fetching projects:", err);
-                const errorMessage = err instanceof Error ? err.message : "Failed to fetch projects";
-                setError(errorMessage);
-            } finally {
-                setLoadingProjects(false);
+    const fetchProjects = useCallback(async () => {
+        setLoadingProjects(true);
+        setError(null);
+        try {
+            const token = localStorage.getItem("auth_token");
+            if (!token) {
+                setError("Not authenticated");
+                return;
             }
-        };
 
-        fetchProjects();
+            const responseJson = await tauriInvoke<string>("get_projects", {
+                token,
+                area_id: area.id,
+            });
+            const projectsData = JSON.parse(responseJson);
+            setProjects(projectsData);
+        } catch (err: unknown) {
+            console.error("Error fetching projects:", err);
+            const errorMessage = err instanceof Error ? err.message : "Failed to fetch projects";
+            setError(errorMessage);
+        } finally {
+            setLoadingProjects(false);
+        }
     }, [area.id]);
+
+    useEffect(() => {
+        fetchProjects();
+    }, [fetchProjects]);
 
     const hasImage = area.image_url && area.image_url.trim() !== "";
     const createdDate = new Date(area.created_at * 1000);
@@ -269,7 +270,19 @@ export default function AreaDetailView({ area }: AreaDetailViewProps) {
                     {/* Projects Section */}
                     <Card className="hover:shadow-md transition-all duration-200 animate-in fade-in slide-in-from-bottom-2">
                         <CardHeader>
-                            <CardTitle>Projects</CardTitle>
+                            <div className="flex items-center justify-between">
+                                <CardTitle>Projects</CardTitle>
+                                <NewProjectDialog
+                                    trigger={
+                                        <Button size="sm" variant="outline">
+                                            <Plus className="mr-2 h-4 w-4" />
+                                            New Project
+                                        </Button>
+                                    }
+                                    defaultAreaId={area.id}
+                                    onSuccess={fetchProjects}
+                                />
+                            </div>
                         </CardHeader>
                         <CardContent>
                             {loadingProjects ? (
@@ -289,9 +302,19 @@ export default function AreaDetailView({ area }: AreaDetailViewProps) {
                                     <p className="text-muted-foreground text-lg font-medium mb-1">
                                         No projects yet
                                     </p>
-                                    <p className="text-sm text-muted-foreground">
+                                    <p className="text-sm text-muted-foreground mb-4">
                                         Projects for this area will appear here
                                     </p>
+                                    <NewProjectDialog
+                                        trigger={
+                                            <Button size="sm">
+                                                <Plus className="mr-2 h-4 w-4" />
+                                                Create First Project
+                                            </Button>
+                                        }
+                                        defaultAreaId={area.id}
+                                        onSuccess={fetchProjects}
+                                    />
                                 </div>
                             ) : (
                                 <div className="space-y-2">
