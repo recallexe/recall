@@ -1,12 +1,6 @@
-// ============================================================================
-// IMPORTS
-// ============================================================================
 import { Brain } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
-// ============================================================================
-// PAGE HEADER COMPONENT
-// ============================================================================
 /**
  * PageHeader component - Fixed header for the home page.
  * Contains the Recall logo and theme toggle.
@@ -14,9 +8,6 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 export function PageHeader() {
   return (
     <header className="fixed top-0 left-0 z-50 w-full px-4 py-4 shrink-0 flex items-center justify-between bg-background/60 backdrop-blur-md">
-      {/* ==================================================================== */}
-      {/* LOGO SECTION */}
-      {/* ==================================================================== */}
       <div className="group/logo flex items-center gap-3 [view-transition-name:recall-logo]">
         {/* Logo Icon Container */}
         <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-linear-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 transition-all duration-300 group-hover/logo:shadow-lg group-hover/logo:shadow-blue-200 dark:group-hover/logo:shadow-blue-900/50">
@@ -31,9 +22,6 @@ export function PageHeader() {
         </span>
       </div>
 
-      {/* ==================================================================== */}
-      {/* THEME TOGGLE */}
-      {/* ==================================================================== */}
       <ThemeToggle />
     </header>
   );

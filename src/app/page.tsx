@@ -1,54 +1,57 @@
-// ============================================================================
-// IMPORTS
-// ============================================================================
+"use client";
+
+import { useEffect, useState } from "react";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { HeroSection } from "@/components/home/HeroSection";
 import { PageHeader } from "@/components/layout/PageHeader";
 
-// ============================================================================
-// TYPES
-// ============================================================================
-type HomeProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
-
-// ============================================================================
-// HOME PAGE
-// ============================================================================
 /**
  * Home page component that displays either the hero section or auth form
- * based on URL search parameters (signin/signup).
+ * based on URL hash (signin/signup). Static for Tauri compatibility.
  */
-export default async function Home({ searchParams }: HomeProps) {
-  // ========================================================================
-  // SEARCH PARAMS PARSING
-  // ========================================================================
-  const sp = await searchParams;
-  const rawValue = sp?.[""];
-  const emptyKeyValue = Array.isArray(rawValue)
-    ? rawValue[0] ?? ""
-    : rawValue ?? "";
-  const isSignIn = emptyKeyValue === "signin";
-  const isSignUp = emptyKeyValue === "signup";
+export default function Home() {
+  const [authMode, setAuthMode] = useState<"signin" | "signup" | null>(null);
 
-  // ========================================================================
-  // AUTH PROPS CONFIGURATION
-  // ========================================================================
+  useEffect(() => {
+    // Function to update auth mode based on current hash
+    const updateAuthMode = () => {
+      const hash = window.location.hash;
+      if (hash === "#signin" || hash === "#signup") {
+        setAuthMode(hash === "#signin" ? "signin" : "signup");
+      } else {
+        setAuthMode(null);
+      }
+    };
+
+    // Check URL hash on mount
+    updateAuthMode();
+
+    // Listen for hash changes
+    const handleHashChange = () => {
+      updateAuthMode();
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
   // Configure authentication form props based on mode (signin/signup)
   const authProps =
-    isSignIn || isSignUp
+    authMode
       ? {
-          mode: (isSignIn ? "signin" : "signup") as "signin" | "signup",
-          title: isSignIn ? "Sign In" : "Sign Up",
-          description: isSignIn
+        mode: authMode,
+        title: authMode === "signin" ? "Sign In" : "Sign Up",
+        description:
+          authMode === "signin"
             ? "Access your Recall dashboard"
             : "Create your Recall account",
-          switchText: isSignIn
+        switchText:
+          authMode === "signin"
             ? "Don't have an account?"
             : "Already have an account?",
-          switchHref: isSignIn ? "/?=signup" : "/?=signin",
-          switchCta: isSignIn ? "Sign up" : "Sign in",
-        }
+        switchHref: authMode === "signin" ? "/#signup" : "/#signin",
+        switchCta: authMode === "signin" ? "Sign up" : "Sign in",
+      }
       : null;
 
   return (

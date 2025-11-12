@@ -2,15 +2,14 @@
 
 import {
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   Settings,
-  Sparkles,
+  User,
   User2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,14 +32,18 @@ export function NavUser({
   user: {
     name: string;
     email: string;
-    avatar: string;
   };
 }) {
   const { isMobile } = useSidebar();
   const router = useRouter();
 
   const handleLogout = () => {
+    localStorage.removeItem("auth_token");
     router.push("/");
+  };
+
+  const handleAccount = () => {
+    router.push("/dashboard/account");
   };
 
   return (
@@ -53,9 +56,8 @@ export function NavUser({
               className="group/user bg-transparent data-[state=open]:bg-sidebar-accent/50 data-[state=open]:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all duration-200"
             >
               <Avatar className="h-8 w-8 rounded-lg ring-2 ring-transparent group-hover/user:ring-primary/20 transition-all duration-200">
-                <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg bg-linear-to-br from-primary/20 to-primary/10 text-primary font-semibold">
-                  {user.name.split(' ').map(n => n[0]).join('')}
+                  <User className="h-4 w-4" />
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight transition-all duration-200 group-hover/user:translate-x-0.5">
@@ -74,9 +76,8 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg ring-2 ring-primary/20">
-                  <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-lg bg-linear-to-br from-primary/20 to-primary/10 text-primary font-semibold">
-                    {user.name.split(' ').map(n => n[0]).join('')}
+                    <User className="h-4 w-4" />
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -87,16 +88,10 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="group/item cursor-pointer transition-all duration-200">
-                <Sparkles className="group-hover/item:text-yellow-500 transition-all duration-200 group-hover/item:scale-110" />
-                <span className="group-hover/item:translate-x-0.5 transition-all duration-200">
-                  Upgrade to Pro
-                </span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem className="group/item cursor-pointer transition-all duration-200">
+              <DropdownMenuItem
+                className="group/item cursor-pointer transition-all duration-200"
+                onClick={handleAccount}
+              >
                 <User2 className="group-hover/item:text-primary transition-all duration-200 group-hover/item:scale-110" />
                 <span className="group-hover/item:translate-x-0.5 transition-all duration-200">
                   Account
@@ -106,12 +101,6 @@ export function NavUser({
                 <Settings className="group-hover/item:text-primary transition-all duration-200 group-hover/item:rotate-90" />
                 <span className="group-hover/item:translate-x-0.5 transition-all duration-200">
                   Settings
-                </span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="group/item cursor-pointer transition-all duration-200">
-                <CreditCard className="group-hover/item:text-primary transition-all duration-200 group-hover/item:scale-110" />
-                <span className="group-hover/item:translate-x-0.5 transition-all duration-200">
-                  Billing
                 </span>
               </DropdownMenuItem>
             </DropdownMenuGroup>

@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# tauri and rust
+src-tauri/target/
+src-tauri/target-*/
+src-tauri/gen/schemas/
+src-tauri/Cargo.lock
