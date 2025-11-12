@@ -21,20 +21,14 @@ export default function Navbar() {
       <SidebarTrigger />
 
       <div className="flex items-center gap-2">
-        {/* Search */}
-        <NavItem icon={<Search />} />
-        {/* Add */}
+        {/* <NavItem icon={<Search />} />
         <NavItem icon={<Plus />} />
-        {/* Network */}
         <NavItem icon={<Network />} />
-        {/* Messages */}
         <NavItem icon={<MessageSquare />} />
-        {/* Notifications */}
-        <NavItem icon={<Bell />} />
+        <NavItem icon={<Bell />} /> */}
         {/* Theme Toggle */}
         <ThemeToggle />
-        {/* Settings */}
-        <NavItem icon={<Settings />} />
+        {/* <NavItem icon={<Settings />} /> */}
       </div>
     </nav>
   );
