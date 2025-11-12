@@ -15,6 +15,15 @@ export function SmoothLink({ href, onClick, children, ...props }: SmoothLinkProp
             onClick?.(e);
             if (e.defaultPrevented) return;
             e.preventDefault();
+
+            // Handle hash-only navigation (e.g., /#signup, /#signin)
+            if (href.startsWith("/#")) {
+                const hash = href.substring(1); // Remove leading /
+                window.location.hash = hash;
+                return;
+            }
+
+            // Handle regular navigation
             const to = href;
             const anyDoc = document as any;
             if (anyDoc && typeof anyDoc.startViewTransition === "function") {
