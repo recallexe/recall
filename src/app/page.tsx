@@ -51,7 +51,7 @@ export default function Home() {
             : "Already have an account?",
         switchHref: authMode === "signin" ? "/#signup" : "/#signin",
         switchCta: authMode === "signin" ? "Sign up" : "Sign in",
-      }
+        }
       : null;
 
   return (

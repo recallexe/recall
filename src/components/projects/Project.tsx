@@ -46,17 +46,17 @@ const getStatusDisplayName = (status: string) => {
   return status === "Progress" ? "In progress" : status;
 };
 
-// Map status to color
+// Map status to color - matching the badge colors used elsewhere
 const getStatusColor = (status: string) => {
   switch (status) {
     case "Inbox":
-      return "#EF4444"; // red-500
+      return "#DC2626"; // red-600 - darker for better visibility on dot
     case "Planned":
-      return "#3B82F6"; // blue-500
+      return "#2563EB"; // blue-600
     case "Progress":
-      return "#EAB308"; // yellow-500
+      return "#CA8A04"; // yellow-600
     case "Done":
-      return "#22C55E"; // green-500
+      return "#16A34A"; // green-600
     default:
       return "#6B7280"; // gray-500
   }
@@ -223,13 +223,18 @@ export default function Project() {
         {(column) => {
           const columnProjects = projects.filter((p) => p.status === column.id);
           return (
-            <KanbanBoard id={column.id} key={column.id} className="min-h-40">
+            <KanbanBoard id={column.id} key={column.id} className="min-h-40 bg-background">
               <KanbanHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div
-                      className="h-2 w-2 rounded-full"
-                      style={{ backgroundColor: column.color }}
+                      className={cn(
+                        "h-2 w-2 rounded-full",
+                        column.id === "Inbox" && "bg-red-600",
+                        column.id === "Planned" && "bg-blue-600",
+                        column.id === "Progress" && "bg-yellow-600",
+                        column.id === "Done" && "bg-green-600"
+                      )}
                     />
                     <span className="font-semibold">{column.name}</span>
                     <span className="text-muted-foreground">({columnProjects.length})</span>
