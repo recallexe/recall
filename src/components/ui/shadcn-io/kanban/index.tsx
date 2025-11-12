@@ -118,7 +118,7 @@ export const KanbanCard = <T extends KanbanItemProps = KanbanItemProps>({
 
   return (
     <>
-      <div style={style} {...listeners} {...attributes} ref={setNodeRef}>
+      <div style={style} {...listeners} {...attributes} ref={setNodeRef} data-id={id}>
         <Card
           className={cn(
             'cursor-grab gap-4 rounded-md p-3 shadow-sm',
@@ -213,12 +213,35 @@ export const KanbanProvider = <
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const sensors = useSensors(
-    useSensor(MouseSensor),
-    useSensor(TouchSensor),
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 200,
+        tolerance: 5,
+      },
+    }),
     useSensor(KeyboardSensor)
   );
 
   const handleDragStart = (event: DragStartEvent) => {
+    // Check if drag started from an interactive element by checking the activator event
+    const activatorEvent = event.activatorEvent as MouseEvent | TouchEvent | KeyboardEvent | undefined;
+    if (activatorEvent && 'target' in activatorEvent) {
+      const target = activatorEvent.target as HTMLElement;
+      if (
+        target.closest('button') ||
+        target.closest('a') ||
+        target.closest('[role="button"]') ||
+        target.closest('[data-no-drag]')
+      ) {
+        return; // Cancel drag if started from interactive element
+      }
+    }
+
     const card = data.find((item) => item.id === event.active.id);
     if (card) {
       setActiveCardId(event.active.id as string);

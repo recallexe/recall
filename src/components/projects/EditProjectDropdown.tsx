@@ -87,14 +87,24 @@ export default function EditProjectDropdown({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => setShowEditDialog(true)}>
+        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+          {trigger}
+        </DropdownMenuTrigger>
+        <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowEditDialog(true);
+            }}
+          >
             <Edit className="mr-2 h-4 w-4" />
             Edit Project
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setShowDeleteDialog(true)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDeleteDialog(true);
+            }}
             className="text-destructive focus:text-destructive"
           >
             <Trash className="mr-2 h-4 w-4" />

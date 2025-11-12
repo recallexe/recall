@@ -265,14 +265,36 @@ export default function Project() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 font-semibold">
                           <Box className="h-4 w-4 text-primary shrink-0" />
-                          <Link href="/dashboard/projects" className="hover:underline">
+                          <Link
+                            href="/dashboard/projects"
+                            className="hover:underline"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                            onMouseDown={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
                             <h3 className="text-sm font-semibold">{project.title}</h3>
                           </Link>
                         </div>
                         <EditProjectDropdown
                           project={project}
                           trigger={
-                            <Button size="icon" variant="ghost" className="h-6 w-6">
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-6 w-6"
+                              data-no-drag="true"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                              }}
+                              onMouseDown={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                              }}
+                            >
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           }
