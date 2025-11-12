@@ -1,51 +1,176 @@
 "use client";
-import { useState } from "react";
-import { recentupcomming as data } from "@/app/lib/data";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { Box, Database } from "lucide-react";
+import { format } from "date-fns";
+
+async function tauriInvoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
+  try {
+    const { invoke } = await import("@tauri-apps/api/core");
+    return await invoke<T>(cmd, args);
+  } catch (err) {
+    console.error(`Error invoking ${cmd}:`, err);
+    throw err;
+  }
+}
+
+interface Project {
+  id: string;
+  title: string;
+  updated_at: number;
+  end_date?: number | null;
+}
+
+interface Resource {
+  id: string;
+  name: string;
+  updated_at: number;
+}
+
+type TabData = {
+  title: string;
+  icon: React.ReactNode;
+  date: string;
+  url: string;
+};
 
 export default function RecentUpcoming() {
-  const [activeTab, setActiveTab] = useState("Notes");
+  const [activeTab, setActiveTab] = useState<"Projects" | "Resources">("Projects");
+  const [projects, setProjects] = useState<TabData[]>([]);
+  const [resources, setResources] = useState<TabData[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  const fetchProjects = useCallback(async () => {
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
+    try {
+      const responseJson = await tauriInvoke<string>("get_projects", {
+        token,
+        area_id: null,
+      });
+      const projectsData = JSON.parse(responseJson) as Project[];
 
-  const tabs = Object.keys(data);
+      const formattedProjects: TabData[] = projectsData
+        .sort((a, b) => (b.updated_at || 0) - (a.updated_at || 0))
+        .slice(0, 5)
+        .map((project) => ({
+          title: project.title,
+          icon: <Box size={17} />,
+          date: project.end_date
+            ? `Due ${format(new Date(project.end_date * 1000), "MMM d, yyyy")}`
+            : `Updated ${format(new Date(project.updated_at * 1000), "MMM d, yyyy")}`,
+          url: "/dashboard/projects",
+        }));
+
+      setProjects(formattedProjects);
+    } catch (err) {
+      console.error("Error fetching projects:", err);
+      setProjects([]);
+    }
+  }, []);
+
+  const fetchResources = useCallback(async () => {
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const responseJson = await tauriInvoke<string>("get_resources", {
+        token,
+        project_id: null,
+      });
+      let resourcesData: Resource[] = [];
+      if (typeof responseJson === "string") {
+        if (responseJson.trim() === "") {
+          resourcesData = [];
+        } else {
+          const parsed = JSON.parse(responseJson);
+          resourcesData = Array.isArray(parsed) ? parsed : [];
+        }
+      } else if (Array.isArray(responseJson)) {
+        resourcesData = responseJson;
+      } else {
+        resourcesData = [];
+      }
+
+      const formattedResources: TabData[] = resourcesData
+        .sort((a, b) => b.updated_at - a.updated_at)
+        .slice(0, 5)
+        .map((resource) => ({
+          title: resource.name,
+          icon: <Database size={17} />,
+          date: `Updated ${format(new Date(resource.updated_at * 1000), "MMM d, yyyy")}`,
+          url: "/dashboard/resources",
+        }));
+
+      setResources(formattedResources);
+    } catch (err) {
+      console.error("Error fetching resources:", err);
+      setResources([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      await Promise.all([fetchProjects(), fetchResources()]);
+      setLoading(false);
+    };
+    fetchData();
+  }, [fetchProjects, fetchResources]);
+
+  const tabs: Array<"Projects" | "Resources"> = ["Projects", "Resources"];
+  const currentData = activeTab === "Projects" ? projects : resources;
 
   return (
     <div className="flex flex-col gap-4">
       {/* Tabs */}
-      <ul className="flex flex-wrap justify-between px-5 items-center border-2  rounded-full text-sm">
+      <div className="flex flex-wrap gap-2 px-2 items-center border-2 rounded-full text-sm">
         {tabs.map((tab) => (
-          <li
+          <button
             key={tab}
-            className={`cursor-pointer px-3 py-1 rounded-full transition-colors ${
-              activeTab === tab
-                ? "bg-primary my-1 mx-[-15] px-4 text-sm text-background"
-                : "hover:bg-muted hover:text-foreground/80 mx-[-15] px-4"
-            }`}
+            type="button"
+            className={`cursor-pointer px-4 py-1.5 rounded-full transition-colors ${activeTab === tab
+              ? "bg-primary text-primary-foreground"
+              : "hover:bg-muted hover:text-foreground/80"
+              }`}
             onClick={() => setActiveTab(tab)}
           >
             {tab}
-          </li>
+          </button>
         ))}
-      </ul>
+      </div>
 
       {/* Content */}
-      <div className="h-62 overflow-y-auto scrollbar-thin">
-        {data[activeTab]?.map((item, index) => (
-          <div
-            key={index}
-            className="flex justify-between py-2 border-b last:border-none"
-          >
-            <Link href={`${item.url}`}>
-              <div className="flex items-center gap-2">
-                {item.icon}
-                <span>{item.title}</span>
-              </div>
-            </Link>
-
-            <span className="text-muted-foreground text-sm">{item.date}</span>
+      <div className="h-[248px] overflow-y-auto scrollbar-thin">
+        {loading ? (
+          <div className="flex items-center justify-center py-8">
+            <p className="text-sm text-muted-foreground">Loading...</p>
           </div>
-        ))}
+        ) : currentData.length === 0 ? (
+          <div className="flex items-center justify-center py-8">
+            <p className="text-sm text-muted-foreground">No {activeTab.toLowerCase()} found</p>
+          </div>
+        ) : (
+          currentData.map((item) => (
+            <div
+              key={`${activeTab}-${item.title}-${item.date}`}
+              className="flex justify-between py-2 border-b last:border-none"
+            >
+              <Link href={item.url} className="flex items-center gap-2 hover:underline">
+                {item.icon}
+                <span className="text-sm">{item.title}</span>
+              </Link>
+              <span className="text-muted-foreground text-sm">{item.date}</span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
