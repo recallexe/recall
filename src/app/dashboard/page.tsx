@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Stat from "@/components/dashboard/Stat";
 import {
   Breadcrumb,
@@ -41,76 +41,78 @@ export default function Dashboard() {
   const [resourcesCount, setResourcesCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCounts = async () => {
-      const token = localStorage.getItem("auth_token");
-      if (!token) {
-        setLoading(false);
-        return;
-      }
+  const fetchCounts = useCallback(async () => {
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
+    try {
+      // Fetch areas count
       try {
-        // Fetch areas count
-        try {
-          const areasJson = await tauriInvoke<string>("get_areas", { token });
-          const areasData = JSON.parse(areasJson);
-          setAreasCount(Array.isArray(areasData) ? areasData.length : 0);
-        } catch (err) {
-          console.error("Error fetching areas:", err);
-        }
-
-        // Fetch projects count
-        try {
-          const projectsJson = await tauriInvoke<string>("get_projects", {
-            token,
-            area_id: null,
-          });
-          const projectsData = JSON.parse(projectsJson);
-          setProjectsCount(Array.isArray(projectsData) ? projectsData.length : 0);
-        } catch (err) {
-          console.error("Error fetching projects:", err);
-        }
-
-        // Fetch resources count
-        try {
-          const resourcesJson = await tauriInvoke<string>("get_resources", {
-            token,
-            project_id: null,
-          });
-          let resourcesData: unknown[] = [];
-          if (typeof resourcesJson === "string") {
-            if (resourcesJson.trim() === "") {
-              resourcesData = [];
-            } else {
-              const parsed = JSON.parse(resourcesJson);
-              resourcesData = Array.isArray(parsed) ? parsed : [];
-            }
-          } else if (Array.isArray(resourcesJson)) {
-            resourcesData = resourcesJson;
-          } else {
-            resourcesData = [];
-          }
-          setResourcesCount(resourcesData.length);
-        } catch (err) {
-          console.error("Error fetching resources:", err);
-        }
-      } finally {
-        setLoading(false);
+        const areasJson = await tauriInvoke<string>("get_areas", { token });
+        const areasData = JSON.parse(areasJson);
+        setAreasCount(Array.isArray(areasData) ? areasData.length : 0);
+      } catch (err) {
+        console.error("Error fetching areas:", err);
       }
-    };
 
-    fetchCounts();
+      // Fetch projects count
+      try {
+        const projectsJson = await tauriInvoke<string>("get_projects", {
+          token,
+          area_id: null,
+        });
+        const projectsData = JSON.parse(projectsJson);
+        setProjectsCount(Array.isArray(projectsData) ? projectsData.length : 0);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      }
+
+      // Fetch resources count
+      try {
+        const resourcesJson = await tauriInvoke<string>("get_resources", {
+          token,
+          project_id: null,
+        });
+        let resourcesData: unknown[] = [];
+        if (typeof resourcesJson === "string") {
+          if (resourcesJson.trim() === "") {
+            resourcesData = [];
+          } else {
+            const parsed = JSON.parse(resourcesJson);
+            resourcesData = Array.isArray(parsed) ? parsed : [];
+          }
+        } else if (Array.isArray(resourcesJson)) {
+          resourcesData = resourcesJson;
+        } else {
+          resourcesData = [];
+        }
+        setResourcesCount(resourcesData.length);
+      } catch (err) {
+        console.error("Error fetching resources:", err);
+      }
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchCounts();
+  }, [fetchCounts]);
 
   // Update stats with live data - only show implemented features
   const liveStats = {
     areas: {
       ...stats.areas,
       value: loading ? stats.areas.value : areasCount,
+      change: "", // Remove "this week" text
     },
     projects: {
       ...stats.projects,
       value: loading ? stats.projects.value : projectsCount,
+      change: "", // Remove "this week" text
     },
     // tasks: stats.tasks, // Not implemented
     // events: stats.events, // Not implemented
@@ -118,6 +120,7 @@ export default function Dashboard() {
     resources: {
       ...stats.resources,
       value: loading ? stats.resources.value : resourcesCount,
+      change: "", // Remove "this week" text
     },
   };
 
@@ -146,6 +149,7 @@ export default function Dashboard() {
                   change={item.change}
                   icon={item.icon}
                   url={item.url}
+                  onAddSuccess={fetchCounts}
                 />
               ))}
             </div>
