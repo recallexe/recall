@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Brain, ChevronRight } from "lucide-react";
@@ -29,10 +29,47 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { NavUser } from "../ui/nav-user";
-import { menu, sample, user, stats } from "@/app/lib/data";
+import { menu, sample, stats } from "@/app/lib/data";
+
+// Helper to safely invoke Tauri commands
+async function tauriInvoke<T = any>(cmd: string, args?: any): Promise<T> {
+  try {
+    const { invoke } = await import('@tauri-apps/api/core');
+    return await invoke<T>(cmd, args);
+  } catch (err) {
+    console.error(`Tauri invoke error for ${cmd}:`, err);
+    throw err;
+  }
+}
 
 export default function AppSidebar() {
   const pathname = usePathname();
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("auth_token");
+      if (!token) return;
+
+      try {
+        const responseJson = await tauriInvoke<string>("validate_token", {
+          token: token,
+        });
+        const userInfo = responseJson && responseJson !== "null" ? JSON.parse(responseJson) : null;
+
+        if (userInfo && userInfo.id) {
+          setUser({
+            name: userInfo.name,
+            email: userInfo.email,
+          });
+        }
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const getBadgeFor = (title: string): string | undefined => {
     const k = title.toLowerCase() as keyof typeof stats;
@@ -190,7 +227,7 @@ export default function AppSidebar() {
 
       {/* FOOTER */}
       <SidebarFooter>
-        <NavUser user={user} />
+        {user && <NavUser user={user} />}
       </SidebarFooter>
     </Sidebar>
   );
@@ -222,10 +259,9 @@ function MenuItem({
           before:w-1 before:bg-linear-to-b before:from-primary before:to-primary/60
           before:opacity-0 before:scale-y-0 before:-translate-x-1
           before:transition-all before:duration-300 before:ease-out
-          ${
-            isActive
-              ? "before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50"
-              : "bg-transparent"
+          ${isActive
+            ? "before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50"
+            : "bg-transparent"
           }
           hover:bg-sidebar-accent/50 active:scale-[0.98]
           after:content-[''] after:absolute after:inset-0 after:bg-linear-to-r 
@@ -239,11 +275,10 @@ function MenuItem({
             className={`
             h-4 w-4 transition-all duration-200 
             group-hover/link:scale-110
-            ${
-              isActive
+            ${isActive
                 ? "text-primary"
                 : "text-muted-foreground group-hover/link:text-foreground"
-            }
+              }
           `}
           />
           <span
@@ -300,11 +335,10 @@ function CollapsibleMenuItem({
               before:w-1 before:bg-linear-to-b before:from-primary before:to-primary/60
               before:opacity-0 before:scale-y-0 before:-translate-x-1
               before:transition-all before:duration-300 before:ease-out
-              ${
-                isActive
-                  ? "before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50"
-                  : "bg-transparent"
-              }
+              ${isActive
+              ? "before:opacity-100 before:scale-y-100 before:translate-x-0 bg-sidebar-accent/50"
+              : "bg-transparent"
+            }
               hover:bg-sidebar-accent/50 active:scale-[0.98]
               after:content-[''] after:absolute after:inset-0 after:bg-linear-to-r 
               after:from-transparent after:via-primary/5 after:to-transparent
@@ -320,11 +354,10 @@ function CollapsibleMenuItem({
               className={`
                h-4 w-4 transition-all duration-200 
                group-hover/link:scale-110
-               ${
-                 isActive
-                   ? "text-primary"
-                   : "text-muted-foreground group-hover/link:text-foreground"
-               }
+               ${isActive
+                  ? "text-primary"
+                  : "text-muted-foreground group-hover/link:text-foreground"
+                }
              `}
             />
             <span

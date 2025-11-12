@@ -89,7 +89,6 @@ export function AuthForm({ mode, title, description, switchText, switchHref, swi
 
                 if (response.success && response.token) {
                     localStorage.setItem("auth_token", response.token);
-                    localStorage.setItem("user", JSON.stringify(response.user));
                     console.log("Signup successful, redirecting to dashboard");
                     router.push("/dashboard");
                 } else {
@@ -114,7 +113,6 @@ export function AuthForm({ mode, title, description, switchText, switchHref, swi
 
                 if (response.success && response.token) {
                     localStorage.setItem("auth_token", response.token);
-                    localStorage.setItem("user", JSON.stringify(response.user));
                     console.log("Signin successful, redirecting to dashboard");
                     router.push("/dashboard");
                 } else {
@@ -193,7 +191,7 @@ export function AuthForm({ mode, title, description, switchText, switchHref, swi
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
-                            <p id="email-hint" className="text-xs text-muted-foreground">We'll never share your email.</p>
+                            <p id="email-hint" className="text-xs text-muted-foreground">We'll never share your email. Unless you do, the data is right next to the executable.</p>
                         </div>
 
                         {/* Password Field */}

@@ -60,19 +60,16 @@ export default function DashboardLayout({
         const userInfo = responseJson && responseJson !== "null" ? JSON.parse(responseJson) : null;
 
         if (userInfo && userInfo.id) {
-          // Token is valid, update user info if needed
-          localStorage.setItem("user", JSON.stringify(userInfo));
+          // Token is valid
           setIsAuthenticated(true);
         } else {
           // Token is invalid, clear and redirect
           localStorage.removeItem("auth_token");
-          localStorage.removeItem("user");
           router.push("/");
         }
       } catch (err) {
         console.error("Auth validation error:", err);
         localStorage.removeItem("auth_token");
-        localStorage.removeItem("user");
         router.push("/");
       }
     };

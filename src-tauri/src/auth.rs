@@ -57,6 +57,31 @@ pub struct SigninRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct ChangePasswordRequest {
+    pub current_password: String,
+    pub new_password: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ChangePasswordResponse {
+    pub success: bool,
+    pub message: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateUserRequest {
+    pub name: String,
+    pub email: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateUserResponse {
+    pub success: bool,
+    pub message: Option<String>,
+    pub user: Option<UserInfo>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct AuthResponse {
     pub success: bool,
     pub token: Option<String>,
@@ -257,6 +282,169 @@ pub fn validate_token(
     };
 
     Ok(serde_json::to_string(&user_info).map_err(anyhow::Error::from)?)
+}
+
+#[tauri::command]
+pub fn update_user(
+    token: String,
+    json: String,
+    state: tauri::State<'_, AppState>,
+) -> Result<String, tauri::Error> {
+    let conn = state.pool.get().map_err(anyhow::Error::from)?;
+
+    // Parse request
+    let request: UpdateUserRequest = serde_json::from_str(&json).map_err(|e| {
+        println!("JSON parse error: {}", e);
+        println!("JSON: {}", json);
+        anyhow::Error::from(e)
+    })?;
+
+    let now = Utc::now().timestamp();
+
+    // Get user_id from token
+    let user_id_result: Result<String, _> = conn.query_row(
+        "SELECT user_id FROM sessions WHERE token = ?1 AND expires_at > ?2",
+        params![token, now],
+        |row| row.get(0),
+    );
+
+    let user_id = match user_id_result {
+        Ok(id) => id,
+        Err(_) => {
+            let error_response = UpdateUserResponse {
+                success: false,
+                message: Some("Invalid or expired token".to_string()),
+                user: None,
+            };
+            return Ok(serde_json::to_string(&error_response).map_err(anyhow::Error::from)?);
+        }
+    };
+
+    // Validate email format (basic check)
+    if !request.email.contains('@') || !request.email.contains('.') {
+        let error_response = UpdateUserResponse {
+            success: false,
+            message: Some("Invalid email format".to_string()),
+            user: None,
+        };
+        return Ok(serde_json::to_string(&error_response).map_err(anyhow::Error::from)?);
+    }
+
+    // Check if email is already taken by another user
+    let email_check: Result<String, _> = conn.query_row(
+        "SELECT id FROM users WHERE email = ?1 AND id != ?2",
+        params![request.email, user_id],
+        |row| row.get(0),
+    );
+
+    if email_check.is_ok() {
+        let error_response = UpdateUserResponse {
+            success: false,
+            message: Some("Email is already taken by another user".to_string()),
+            user: None,
+        };
+        return Ok(serde_json::to_string(&error_response).map_err(anyhow::Error::from)?);
+    }
+
+    // Update user
+    conn.execute(
+        "UPDATE users SET name = ?1, email = ?2, updated_at = ?3 WHERE id = ?4",
+        params![request.name, request.email, now, user_id],
+    )
+    .map_err(anyhow::Error::from)?;
+
+    let response = UpdateUserResponse {
+        success: true,
+        message: None,
+        user: Some(UserInfo {
+            id: user_id,
+            email: request.email,
+            name: request.name,
+        }),
+    };
+
+    Ok(serde_json::to_string(&response).map_err(anyhow::Error::from)?)
+}
+
+#[tauri::command]
+pub fn change_password_with_token(
+    token: String,
+    json: String,
+    state: tauri::State<'_, AppState>,
+) -> Result<String, tauri::Error> {
+    let conn = state.pool.get().map_err(anyhow::Error::from)?;
+
+    // Parse request
+    let request: ChangePasswordRequest = serde_json::from_str(&json).map_err(|e| {
+        println!("JSON parse error: {}", e);
+        println!("JSON: {}", json);
+        anyhow::Error::from(e)
+    })?;
+
+    let now = Utc::now().timestamp();
+
+    // Get user_id from token
+    let user_id_result: Result<String, _> = conn.query_row(
+        "SELECT user_id FROM sessions WHERE token = ?1 AND expires_at > ?2",
+        params![token, now],
+        |row| row.get(0),
+    );
+
+    let user_id = match user_id_result {
+        Ok(id) => id,
+        Err(_) => {
+            let error_response = ChangePasswordResponse {
+                success: false,
+                message: Some("Invalid or expired token".to_string()),
+            };
+            return Ok(serde_json::to_string(&error_response).map_err(anyhow::Error::from)?);
+        }
+    };
+
+    // Get current password hash
+    let password_hash_result: Result<String, _> = conn.query_row(
+        "SELECT password_hash FROM users WHERE id = ?1",
+        params![user_id],
+        |row| row.get(0),
+    );
+
+    let password_hash = match password_hash_result {
+        Ok(hash) => hash,
+        Err(_) => {
+            let error_response = ChangePasswordResponse {
+                success: false,
+                message: Some("User not found".to_string()),
+            };
+            return Ok(serde_json::to_string(&error_response).map_err(anyhow::Error::from)?);
+        }
+    };
+
+    // Verify current password
+    if !verify(&request.current_password, &password_hash).unwrap_or(false) {
+        let error_response = ChangePasswordResponse {
+            success: false,
+            message: Some("Current password is incorrect".to_string()),
+        };
+        return Ok(serde_json::to_string(&error_response).map_err(anyhow::Error::from)?);
+    }
+
+    // Hash new password
+    let new_password_hash = hash(&request.new_password, DEFAULT_COST)
+        .map_err(|e| anyhow::anyhow!("Failed to hash password: {}", e))?;
+
+    // Update password
+    conn.execute(
+        "UPDATE users SET password_hash = ?1, updated_at = ?2 WHERE id = ?3",
+        params![new_password_hash, now, user_id],
+    )
+    .map_err(anyhow::Error::from)?;
+
+    let response = ChangePasswordResponse {
+        success: true,
+        message: None,
+    };
+
+    Ok(serde_json::to_string(&response).map_err(anyhow::Error::from)?)
 }
 
 #[tauri::command]

@@ -98,6 +98,8 @@ pub fn run(pool: Pool<SqliteConnectionManager>) {
             auth::signup,
             auth::signin,
             auth::validate_token,
+            auth::update_user,
+            auth::change_password_with_token,
             auth::delete_session
         ])
         .run(tauri::generate_context!())
