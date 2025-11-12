@@ -1,6 +1,3 @@
-// ============================================================================
-// IMPORTS
-// ============================================================================
 import { projects } from "@/app/lib/data";
 
 import { Card } from "@/components/ui/card";
@@ -11,9 +8,6 @@ import Link from "next/link";
 import { NewProjectDialog } from "./NewProjectDialog";
 import EditProjectDropdown from "./EditProjectDropdown";
 
-// ============================================================================
-// PROJECT COMPONENT
-// ============================================================================
 /**
  * Project component renders a horizontal scrollable kanban board with project cards
  * organized by status (Inbox, Planned, Progress, Done).
@@ -21,20 +15,11 @@ import EditProjectDropdown from "./EditProjectDropdown";
 export default function Project() {
   return (
     <>
-      {/* ==================================================================== */}
-      {/* HORIZONTAL SCROLLABLE GRID CONTAINER */}
-      {/* ==================================================================== */}
       {/* Creates a horizontal scrolling grid with fixed-width columns (340px) */}
       <div className="grid grid-flow-col auto-cols-[340px] h-[calc(100vh-100px)] gap-4 overflow-x-auto mt-4">
-        {/* ================================================================ */}
-        {/* STATUS COLUMNS LOOP */}
-        {/* ================================================================ */}
         {/* Iterates over each project status to create a column */}
         {Object.entries(projects).map(([status, list]) => (
           <div key={status}>
-            {/* ============================================================ */}
-            {/* STATUS HEADER */}
-            {/* ============================================================ */}
             {/* Sticky header with status badge, project count, and add button */}
             <div className="flex flex-row items-center font-semibold gap-4 sticky top-0 z-50">
               {/* Status Badge */}
@@ -53,7 +38,7 @@ export default function Project() {
               <div>{list.length}</div>
               {/* Add Project Button (Quick) */}
               <NewProjectDialog
-                triger={
+                trigger={
                   <Button variant="ghost" size="icon">
                     <Plus size={22} />
                   </Button>
@@ -61,13 +46,7 @@ export default function Project() {
               />
             </div>
 
-            {/* ============================================================ */}
-            {/* PROJECT CARDS CONTAINER */}
-            {/* ============================================================ */}
             <div className="flex flex-col gap-4 mt-2">
-              {/* ========================================================== */}
-              {/* PROJECT CARDS LOOP */}
-              {/* ========================================================== */}
               {/* Renders individual project cards */}
               {list.map((project) => (
                 <Card
@@ -83,7 +62,7 @@ export default function Project() {
                       </Link>
                     </div>
                     <EditProjectDropdown
-                      triger={
+                      trigger={
                         <Button size="icon" variant="ghost">
                           <MoreHorizontal />
                         </Button>
@@ -130,11 +109,8 @@ export default function Project() {
                 </Card>
               ))}
 
-              {/* ========================================================== */}
-              {/* ADD NEW PROJECT DIALOG (Bottom of Column) */}
-              {/* ========================================================== */}
               <NewProjectDialog
-                triger={
+                trigger={
                   <Button
                     variant="outline"
                     className="flex w-full flex-row items-center p-4"

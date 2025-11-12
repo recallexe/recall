@@ -1,6 +1,3 @@
-// ============================================================================
-// IMPORTS
-// ============================================================================
 import Stat from "@/components/dashboard/Stat";
 import {
   Breadcrumb,
@@ -16,9 +13,6 @@ import RecentUpcoming from "@/components/dashboard/RecentUpcoming";
 import { Chart } from "@/components/dashboard/AppChart";
 import TodaysSchedule from "@/components/dashboard/Today'sSchedule";
 
-// ============================================================================
-// DASHBOARD PAGE
-// ============================================================================
 /**
  * Main dashboard page component that displays:
  * - Statistics cards (Areas, Projects, Tasks, Events, Notes, Resources)
@@ -30,13 +24,7 @@ import TodaysSchedule from "@/components/dashboard/Today'sSchedule";
 export default function Dashboard() {
   return (
     <>
-      {/* ==================================================================== */}
-      {/* MAIN CONTAINER */}
-      {/* ==================================================================== */}
       <main className="mx-4 mb-4">
-        {/* ================================================================ */}
-        {/* BREADCRUMB NAVIGATION */}
-        {/* ================================================================ */}
         <Breadcrumb>
           <BreadcrumbList className="text-2xl">
             <BreadcrumbItem>
@@ -47,14 +35,8 @@ export default function Dashboard() {
           </BreadcrumbList>
         </Breadcrumb>
 
-        {/* ================================================================ */}
-        {/* DASHBOARD CONTENT */}
-        {/* ================================================================ */}
         <section>
           <div className="mt-4 flex flex-col gap-4">
-            {/* ============================================================ */}
-            {/* FIRST ROW: STATISTICS CARDS */}
-            {/* ============================================================ */}
             {/* Grid of stat cards showing counts for Areas, Projects, Tasks, etc. */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
               {Object.values(stats).map((item, index) => (
@@ -69,9 +51,6 @@ export default function Dashboard() {
               ))}
             </div>
 
-            {/* ============================================================ */}
-            {/* SECOND ROW: CONTENT CARDS */}
-            {/* ============================================================ */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Today's Overview Card */}
               <Card>
@@ -104,9 +83,6 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
 
-              {/* ========================================================== */}
-              {/* THIRD ROW: PERFORMANCE & SCHEDULE */}
-              {/* ========================================================== */}
               {/* Weekly Performance Chart Card */}
               <Card className="flex flex-col">
                 <CardHeader>

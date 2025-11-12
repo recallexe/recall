@@ -1,6 +1,3 @@
-// ============================================================================
-// IMPORTS
-// ============================================================================
 "use client";
 import * as React from "react";
 import { ChevronDownIcon, Plus } from "lucide-react";
@@ -30,27 +27,18 @@ import { sample, projects } from "@/app/lib/data";
 import { DatePicker } from "./DatePicker";
 import { Textarea } from "@/components/ui/textarea";
 
-// ============================================================================
-// APP DIALOG COMPONENT
-// ============================================================================
 /**
  * AppDialog component - Modal dialog for adding/editing projects.
  * Accepts a custom trigger element as a prop.
  */
-export function NewProjectDialog({triger}: {triger:React.ReactNode}) {
+export function NewProjectDialog({ trigger }: { trigger: React.ReactNode }) {
   return (
     <Dialog>
       <form>
-        {/* ================================================================ */}
-        {/* DIALOG TRIGGER */}
-        {/* ================================================================ */}
         <DialogTrigger asChild>
-          {triger}
+          {trigger}
         </DialogTrigger>
 
-        {/* ================================================================ */}
-        {/* DIALOG CONTENT */}
-        {/* ================================================================ */}
         <DialogContent className="sm:max-w-[425px]">
           {/* Dialog Header */}
           <DialogHeader>
@@ -59,25 +47,16 @@ export function NewProjectDialog({triger}: {triger:React.ReactNode}) {
 
           {/* Form Fields */}
           <div className="grid gap-4">
-            {/* ============================================================ */}
-            {/* PROJECT NAME */}
-            {/* ============================================================ */}
             <div className="grid gap-3">
               <Label htmlFor="name-1">Name</Label>
               <Input id="name-1" name="name" defaultValue="New Project" />
             </div>
 
-            {/* ============================================================ */}
-            {/* PROJECT DESCRIPTION */}
-            {/* ============================================================ */}
             <div className="grid w-full gap-3">
               <Label htmlFor="message">Description</Label>
               <Textarea placeholder="Type your message here." id="message" />
             </div>
 
-            {/* ============================================================ */}
-            {/* AREA & STATUS SELECTS */}
-            {/* ============================================================ */}
             <div className="flex gap-2">
               {/* Area Select */}
               <div className="flex-1 grid gap-3">
@@ -108,18 +87,12 @@ export function NewProjectDialog({triger}: {triger:React.ReactNode}) {
               </div>
             </div>
 
-            {/* ============================================================ */}
-            {/* DATE PICKERS */}
-            {/* ============================================================ */}
             <div className="flex gap-2">
               <DatePicker title="Start Date" />
               <DatePicker title="End Date" />
             </div>
           </div>
 
-          {/* ================================================================ */}
-          {/* DIALOG FOOTER */}
-          {/* ================================================================ */}
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>

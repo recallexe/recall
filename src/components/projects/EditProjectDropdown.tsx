@@ -8,13 +8,13 @@ import { Delete, Edit, Trash } from "lucide-react";
 import { NewProjectDialog } from "./NewProjectDialog";
 
 export default function EditProjectDropdown({
-  triger,
+  trigger,
 }: {
-  triger: React.ReactNode;
+  trigger: React.ReactNode;
 }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>{triger}</DropdownMenuTrigger>
+      <DropdownMenuTrigger>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
           <Edit />

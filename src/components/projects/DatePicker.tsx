@@ -1,6 +1,3 @@
-// ============================================================================
-// IMPORTS
-// ============================================================================
 "use client";
 
 import * as React from "react";
@@ -16,9 +13,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-// ============================================================================
-// UTILITY FUNCTIONS
-// ============================================================================
 /**
  * Formats a date object to a readable string format.
  * @param date - Date object to format
@@ -48,17 +42,11 @@ function isValidDate(date: Date | undefined) {
   return !isNaN(date.getTime());
 }
 
-// ============================================================================
-// DATE PICKER COMPONENT
-// ============================================================================
 /**
  * DatePicker component - Combines an input field with a calendar popover.
  * Allows users to select dates either by typing or using the calendar picker.
  */
-export function DatePicker({title}: {title: string}) {
-  // ========================================================================
-  // STATE
-  // ========================================================================
+export function DatePicker({ title }: { title: string }) {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(
     new Date("2025-06-01")
@@ -75,9 +63,6 @@ export function DatePicker({title}: {title: string}) {
 
       {/* Input & Calendar Popover Container */}
       <div className="relative flex gap-2">
-        {/* ================================================================ */}
-        {/* DATE INPUT FIELD */}
-        {/* ================================================================ */}
         <Input
           id="date"
           value={value}
@@ -100,9 +85,6 @@ export function DatePicker({title}: {title: string}) {
           }}
         />
 
-        {/* ================================================================ */}
-        {/* CALENDAR POPOVER */}
-        {/* ================================================================ */}
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             {/* Calendar Icon Button */}

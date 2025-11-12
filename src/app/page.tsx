@@ -1,28 +1,16 @@
-// ============================================================================
-// IMPORTS
-// ============================================================================
 import { AuthForm } from "@/components/auth/AuthForm";
 import { HeroSection } from "@/components/home/HeroSection";
 import { PageHeader } from "@/components/layout/PageHeader";
 
-// ============================================================================
-// TYPES
-// ============================================================================
 type HomeProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-// ============================================================================
-// HOME PAGE
-// ============================================================================
 /**
  * Home page component that displays either the hero section or auth form
  * based on URL search parameters (signin/signup).
  */
 export default async function Home({ searchParams }: HomeProps) {
-  // ========================================================================
-  // SEARCH PARAMS PARSING
-  // ========================================================================
   const sp = await searchParams;
   const rawValue = sp?.[""];
   const emptyKeyValue = Array.isArray(rawValue)
@@ -31,24 +19,21 @@ export default async function Home({ searchParams }: HomeProps) {
   const isSignIn = emptyKeyValue === "signin";
   const isSignUp = emptyKeyValue === "signup";
 
-  // ========================================================================
-  // AUTH PROPS CONFIGURATION
-  // ========================================================================
   // Configure authentication form props based on mode (signin/signup)
   const authProps =
     isSignIn || isSignUp
       ? {
-          mode: (isSignIn ? "signin" : "signup") as "signin" | "signup",
-          title: isSignIn ? "Sign In" : "Sign Up",
-          description: isSignIn
-            ? "Access your Recall dashboard"
-            : "Create your Recall account",
-          switchText: isSignIn
-            ? "Don't have an account?"
-            : "Already have an account?",
-          switchHref: isSignIn ? "/?=signup" : "/?=signin",
-          switchCta: isSignIn ? "Sign up" : "Sign in",
-        }
+        mode: (isSignIn ? "signin" : "signup") as "signin" | "signup",
+        title: isSignIn ? "Sign In" : "Sign Up",
+        description: isSignIn
+          ? "Access your Recall dashboard"
+          : "Create your Recall account",
+        switchText: isSignIn
+          ? "Don't have an account?"
+          : "Already have an account?",
+        switchHref: isSignIn ? "/?=signup" : "/?=signin",
+        switchCta: isSignIn ? "Sign up" : "Sign in",
+      }
       : null;
 
   return (

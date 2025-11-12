@@ -1,6 +1,3 @@
-// ============================================================================
-// IMPORTS
-// ============================================================================
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -11,9 +8,6 @@ import { Github, Globe, XIcon } from "lucide-react";
 import { SmoothLink } from "@/components/ui/smooth-link";
 import Link from "next/link";
 
-// ============================================================================
-// TYPES
-// ============================================================================
 type AuthFormProps = {
     mode: "signin" | "signup";
     title: string;
@@ -23,29 +17,17 @@ type AuthFormProps = {
     switchCta: string;
 };
 
-// ============================================================================
-// AUTH FORM COMPONENT
-// ============================================================================
 /**
  * AuthForm component - Authentication form for sign in and sign up.
  * Supports both modes with conditional fields and OAuth buttons.
  */
 export function AuthForm({ mode, title, description, switchText, switchHref, switchCta }: AuthFormProps) {
-    // ========================================================================
-    // MODE CHECK
-    // ========================================================================
     const isSignUp = mode === "signup";
     const isSignIn = mode === "signin";
 
     return (
         <div className="mx-auto flex flex-1 w-full max-w-screen-sm items-center justify-center px-4 py-10 overflow-y-auto">
-            {/* ================================================================ */}
-            {/* AUTH CARD */}
-            {/* ================================================================ */}
             <Card key={mode} className="w-full border shadow-sm backdrop-blur-[1px] transition-[height] animate-in fade-in-50 zoom-in-95 duration-200 [view-transition-name:auth-card]">
-                {/* ============================================================ */}
-                {/* CARD HEADER */}
-                {/* ============================================================ */}
                 <CardHeader className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
                         {/* Title */}
@@ -61,13 +43,7 @@ export function AuthForm({ mode, title, description, switchText, switchHref, swi
                     <CardDescription key={`${mode}-desc`} className="animate-in fade-in-50 duration-200">{description}</CardDescription>
                 </CardHeader>
 
-                {/* ============================================================ */}
-                {/* CARD CONTENT */}
-                {/* ============================================================ */}
                 <CardContent className="space-y-6">
-                    {/* ======================================================== */}
-                    {/* OAUTH BUTTONS */}
-                    {/* ======================================================== */}
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                         {/* Google OAuth */}
                         <Button variant="outline" type="button" disabled aria-disabled="true" className="justify-start gap-2">
@@ -85,9 +61,6 @@ export function AuthForm({ mode, title, description, switchText, switchHref, swi
                         <div className="absolute left-1/2 top-1 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">or</div>
                     </div>
 
-                    {/* ======================================================== */}
-                    {/* EMAIL/PASSWORD FORM */}
-                    {/* ======================================================== */}
                     <form key={`${mode}-form`} className="space-y-4 animate-in fade-in-50 slide-in-from-top-1 duration-200" action="/">
                         {/* Name Field (Sign Up Only) */}
                         {isSignUp && (
@@ -149,9 +122,6 @@ export function AuthForm({ mode, title, description, switchText, switchHref, swi
                     </form>
                 </CardContent>
 
-                {/* ============================================================ */}
-                {/* CARD FOOTER */}
-                {/* ============================================================ */}
                 <CardFooter className="flex items-center justify-between">
                     {/* Switch Mode Link */}
                     <div className="text-sm text-muted-foreground">
