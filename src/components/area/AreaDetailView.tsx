@@ -46,6 +46,7 @@ interface Project {
     updated_at: number;
 }
 
+
 interface AreaDetailViewProps {
     area: Area;
 }
@@ -58,6 +59,7 @@ export default function AreaDetailView({ area }: AreaDetailViewProps) {
     const [projects, setProjects] = useState<Project[]>([]);
     const [loadingProjects, setLoadingProjects] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [projectResourceCounts, setProjectResourceCounts] = useState<Record<string, number>>({});
 
     const fetchProjects = useCallback(async () => {
         setLoadingProjects(true);
@@ -84,9 +86,60 @@ export default function AreaDetailView({ area }: AreaDetailViewProps) {
         }
     }, [area.id]);
 
+    const fetchResourceCounts = useCallback(async (projectIds: string[]) => {
+        if (projectIds.length === 0) {
+            setProjectResourceCounts({});
+            return;
+        }
+
+        const token = localStorage.getItem("auth_token");
+        if (!token) return;
+
+        const counts: Record<string, number> = {};
+
+        try {
+            // Fetch all resources for all projects in this area
+            for (const projectId of projectIds) {
+                try {
+                    const responseJson = await tauriInvoke<string>("get_resources", {
+                        token,
+                        project_id: projectId,
+                    });
+                    let resourcesData: unknown[] = [];
+                    if (typeof responseJson === "string") {
+                        if (responseJson.trim() === "") {
+                            resourcesData = [];
+                        } else {
+                            const parsed = JSON.parse(responseJson);
+                            resourcesData = Array.isArray(parsed) ? parsed : [];
+                        }
+                    } else if (Array.isArray(responseJson)) {
+                        resourcesData = responseJson;
+                    } else {
+                        resourcesData = [];
+                    }
+                    counts[projectId] = resourcesData.length;
+                } catch (err) {
+                    console.error(`Error fetching resources for project ${projectId}:`, err);
+                    counts[projectId] = 0;
+                }
+            }
+            setProjectResourceCounts(counts);
+        } catch (err) {
+            console.error("Error fetching resource counts:", err);
+        }
+    }, []);
+
     useEffect(() => {
         fetchProjects();
     }, [fetchProjects]);
+
+    useEffect(() => {
+        if (projects.length > 0) {
+            const projectIds = projects.map((p) => p.id);
+            fetchResourceCounts(projectIds);
+        }
+    }, [projects, fetchResourceCounts]);
 
     const hasImage = area.image_url && area.image_url.trim() !== "";
     const createdDate = new Date(area.created_at * 1000);
@@ -343,6 +396,11 @@ export default function AreaDetailView({ area }: AreaDetailViewProps) {
                                                             {project.priority && (
                                                                 <div className={cn("px-2.5 py-0.5 rounded-md text-xs font-medium transition-colors duration-200", getPriorityColor(project.priority))}>
                                                                     {project.priority}
+                                                                </div>
+                                                            )}
+                                                            {projectResourceCounts[project.id] !== undefined && projectResourceCounts[project.id] > 0 && (
+                                                                <div className="text-xs text-muted-foreground">
+                                                                    {projectResourceCounts[project.id]} resource{projectResourceCounts[project.id] !== 1 ? "s" : ""}
                                                                 </div>
                                                             )}
                                                             {(project.start_date || project.end_date) && (

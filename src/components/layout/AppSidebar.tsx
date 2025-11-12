@@ -32,7 +32,7 @@ import { NavUser } from "../ui/nav-user";
 import { menu, sample, stats } from "@/app/lib/data";
 
 // Helper to safely invoke Tauri commands
-async function tauriInvoke<T = any>(cmd: string, args?: any): Promise<T> {
+async function tauriInvoke<T = unknown>(cmd: string, args?: Record<string, unknown>): Promise<T> {
   try {
     const { invoke } = await import('@tauri-apps/api/core');
     return await invoke<T>(cmd, args);
@@ -71,6 +71,7 @@ export default function AppSidebar() {
   const [areasCount, setAreasCount] = useState<number>(0);
   const [projects, setProjects] = useState<Project[]>([]);
   const [projectsCount, setProjectsCount] = useState<number>(0);
+  const [resourcesCount, setResourcesCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -131,8 +132,37 @@ export default function AppSidebar() {
       }
     };
 
+    const fetchResources = async () => {
+      const token = localStorage.getItem("auth_token");
+      if (!token) return;
+
+      try {
+        const responseJson = await tauriInvoke<string>("get_resources", {
+          token,
+          project_id: null,
+        });
+        let resourcesData: unknown[] = [];
+        if (typeof responseJson === "string") {
+          if (responseJson.trim() === "") {
+            resourcesData = [];
+          } else {
+            const parsed = JSON.parse(responseJson);
+            resourcesData = Array.isArray(parsed) ? parsed : [];
+          }
+        } else if (Array.isArray(responseJson)) {
+          resourcesData = responseJson;
+        } else {
+          resourcesData = [];
+        }
+        setResourcesCount(resourcesData.length);
+      } catch (err) {
+        console.error("Error fetching resources:", err);
+      }
+    };
+
     fetchAreas();
     fetchProjects();
+    fetchResources();
   }, []); // Fetch data on mount
 
   const getBadgeFor = (title: string): string | undefined => {
@@ -142,8 +172,11 @@ export default function AppSidebar() {
     if (title.toLowerCase() === "projects") {
       return projectsCount > 0 ? String(projectsCount) : undefined;
     }
+    if (title.toLowerCase() === "resources") {
+      return resourcesCount > 0 ? String(resourcesCount) : undefined;
+    }
     const k = title.toLowerCase() as keyof typeof stats;
-    const s = (stats as any)[k];
+    const s = stats[k as keyof typeof stats];
     return s && typeof s.value === "number" ? String(s.value) : undefined;
   };
 
@@ -153,12 +186,12 @@ export default function AppSidebar() {
     "Dashboard",
     "Areas",
     "Projects",
-    "Tasks",
-    "Notes",
-    "Events",
+    // "Tasks",
+    // "Notes",
+    // "Events",
   ];
   const libraryItems = ["Resources"];
-  const moreItems = ["Calendar", "Archive"];
+  // const moreItems = ["Calendar", "Archive"];
 
   return (
     <Sidebar variant="inset" collapsible="icon" className="bg-background">
@@ -275,9 +308,10 @@ export default function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarSeparator className="my-2" />
+        {/* <SidebarSeparator className="my-2" /> */}
 
         {/* MORE */}
+        {/* {moreItems.length > 0 && (
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-semibold tracking-wider">
             More
@@ -302,6 +336,7 @@ export default function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        )} */}
       </SidebarContent>
 
       {/* FOOTER */}
@@ -322,7 +357,7 @@ function MenuItem({
 }: {
   title: string;
   url: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string; size?: number }>;
   isActive: boolean;
   badge?: string;
 }) {
@@ -390,7 +425,7 @@ function CollapsibleMenuItem({
   badge,
   defaultOpen,
 }: {
-  item: { title: string; url: string; Icon: React.ComponentType<any> };
+  item: { title: string; url: string; Icon: React.ComponentType<{ className?: string; size?: number }> };
   subs: string[];
   subsData?: Area[];
   projectsData?: Project[];

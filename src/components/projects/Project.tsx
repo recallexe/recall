@@ -70,6 +70,7 @@ export default function Project() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [projectResourceCounts, setProjectResourceCounts] = useState<Record<string, number>>({});
 
   const fetchProjects = useCallback(async () => {
     setLoading(true);
@@ -96,9 +97,60 @@ export default function Project() {
     }
   }, []);
 
+  const fetchResourceCounts = useCallback(async (projectIds: string[]) => {
+    if (projectIds.length === 0) {
+      setProjectResourceCounts({});
+      return;
+    }
+
+    const token = localStorage.getItem("auth_token");
+    if (!token) return;
+
+    const counts: Record<string, number> = {};
+
+    try {
+      // Fetch all resources for all projects
+      for (const projectId of projectIds) {
+        try {
+          const responseJson = await tauriInvoke<string>("get_resources", {
+            token,
+            project_id: projectId,
+          });
+          let resourcesData: unknown[] = [];
+          if (typeof responseJson === "string") {
+            if (responseJson.trim() === "") {
+              resourcesData = [];
+            } else {
+              const parsed = JSON.parse(responseJson);
+              resourcesData = Array.isArray(parsed) ? parsed : [];
+            }
+          } else if (Array.isArray(responseJson)) {
+            resourcesData = responseJson;
+          } else {
+            resourcesData = [];
+          }
+          counts[projectId] = resourcesData.length;
+        } catch (err) {
+          console.error(`Error fetching resources for project ${projectId}:`, err);
+          counts[projectId] = 0;
+        }
+      }
+      setProjectResourceCounts(counts);
+    } catch (err) {
+      console.error("Error fetching resource counts:", err);
+    }
+  }, []);
+
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
+
+  useEffect(() => {
+    if (projects.length > 0) {
+      const projectIds = projects.map((p) => p.id);
+      fetchResourceCounts(projectIds);
+    }
+  }, [projects, fetchResourceCounts]);
 
   // Transform projects to kanban format
   const kanbanData = projects.map((project) => ({
@@ -307,6 +359,13 @@ export default function Project() {
                         <p className="text-xs text-muted-foreground line-clamp-2">
                           {project.description}
                         </p>
+                      )}
+
+                      {/* Resource Count */}
+                      {projectResourceCounts[project.id] !== undefined && projectResourceCounts[project.id] > 0 && (
+                        <div className="text-xs text-muted-foreground">
+                          {projectResourceCounts[project.id]} resource{projectResourceCounts[project.id] !== 1 ? "s" : ""}
+                        </div>
                       )}
 
                       {/* Project Areas */}

@@ -1,6 +1,7 @@
 mod areas;
 mod auth;
 mod projects;
+mod resources;
 
 use anyhow::Result;
 use chrono::Utc;
@@ -131,7 +132,13 @@ pub fn run(pool: Pool<SqliteConnectionManager>) {
             projects::get_project_by_id,
             projects::update_project,
             projects::move_project,
-            projects::delete_project
+            projects::delete_project,
+            resources::create_resource,
+            resources::get_resources,
+            resources::get_resource_by_id,
+            resources::update_resource,
+            resources::delete_resource,
+            resources::download_resource_file
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

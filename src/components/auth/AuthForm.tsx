@@ -144,7 +144,7 @@ export function AuthForm({ mode, title, description, switchText, switchHref, swi
                                 window.location.hash = "";
                             }}
                         >
-                            <XIcon className="size-4" aria-hidden="true" />
+                                <XIcon className="size-4" aria-hidden="true" />
                         </Button>
                     </div>
                     {/* Description */}
@@ -155,7 +155,7 @@ export function AuthForm({ mode, title, description, switchText, switchHref, swi
                     {error && (
                         <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
                             {error}
-                        </div>
+                    </div>
                     )}
 
                     <form key={`${mode}-form`} className="space-y-4 animate-in fade-in-50 slide-in-from-top-1 duration-200" onSubmit={handleSubmit}>

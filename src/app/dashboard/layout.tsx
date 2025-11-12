@@ -112,12 +112,12 @@ export default function DashboardLayout({
         <SidebarProvider defaultOpen={defaultOpen}>
           {/* Left Sidebar */}
           <AppSideBar />
-
+          
           {/* Main Content Area */}
           <SidebarInset className="h-dvh overflow-y-auto overflow-x-hidden md:peer-data-[variant=inset]:m-0 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-none md:peer-data-[variant=inset]:shadow-none">
             {/* Sticky Navbar */}
             <Navbar />
-
+            
             {/* Page Content */}
             <div>{children}</div>
           </SidebarInset>
