@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { FileText, MoreVertical, Trash2, Edit, ExternalLink, Download, Eye } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -263,7 +263,7 @@ export function ResourceCard({ resource, onUpdate }: ResourceCardProps) {
 
     return (
         <>
-            <Card className="hover:shadow-md transition">
+            <Card className="hover:shadow-md transition flex flex-col">
                 <CardHeader>
                     <div className="flex items-start justify-between">
                         <div className="flex items-start gap-3 flex-1">
@@ -331,23 +331,23 @@ export function ResourceCard({ resource, onUpdate }: ResourceCardProps) {
                         </DropdownMenu>
                     </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-1">
                     {preview && (
-                        <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
+                        <p className="text-sm text-muted-foreground line-clamp-3">
                             {preview}
                         </p>
                     )}
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>
-                            {resource.file_size
-                                ? `${(resource.file_size / 1024).toFixed(1)} KB`
-                                : "Text document"}
-                        </span>
-                        <span>
-                            Updated {format(new Date(resource.updated_at * 1000), "MMM d, yyyy")}
-                        </span>
-                    </div>
                 </CardContent>
+                <CardFooter className="flex items-center justify-between text-xs text-muted-foreground border-t pt-3 mt-auto">
+                    <span>
+                        {resource.file_size
+                            ? `${(resource.file_size / 1024).toFixed(1)} KB`
+                            : "Text document"}
+                    </span>
+                    <span>
+                        Updated {format(new Date(resource.updated_at * 1000), "MMM d, yyyy")}
+                    </span>
+                </CardFooter>
             </Card>
 
             <NewResourceDialog
