@@ -1,10 +1,14 @@
+mod areas;
 mod auth;
+mod projects;
 
 use anyhow::Result;
+use chrono::Utc;
 use exemplar::Model;
 use r2d2::Pool;
 use r2d2_sqlite::SqliteConnectionManager;
 use rand::Rng;
+use rusqlite::params;
 use serde::{Deserialize, Serialize};
 
 // Trait for safe access to id field
@@ -37,6 +41,22 @@ pub fn generate_id() -> String {
 
 pub struct AppState {
     pub pool: Pool<SqliteConnectionManager>,
+}
+
+// Helper function to get user_id from token
+pub fn get_user_id_from_token(
+    token: &str,
+    conn: &rusqlite::Connection,
+) -> Result<String, tauri::Error> {
+    let now = Utc::now().timestamp();
+    let user_id: String = conn
+        .query_row(
+            "SELECT user_id FROM sessions WHERE token = ?1 AND expires_at > ?2",
+            params![token, now],
+            |row| row.get(0),
+        )
+        .map_err(|_| tauri::Error::Anyhow(anyhow::anyhow!("Invalid or expired token")))?;
+    Ok(user_id)
 }
 
 // Helper function to insert a model instance with retry logic for UNIQUE constraint failures
@@ -100,7 +120,18 @@ pub fn run(pool: Pool<SqliteConnectionManager>) {
             auth::validate_token,
             auth::update_user,
             auth::change_password_with_token,
-            auth::delete_session
+            auth::delete_session,
+            areas::create_area,
+            areas::get_areas,
+            areas::get_area_by_id,
+            areas::update_area,
+            areas::delete_area,
+            projects::create_project,
+            projects::get_projects,
+            projects::get_project_by_id,
+            projects::update_project,
+            projects::move_project,
+            projects::delete_project
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -9,7 +9,12 @@ use rusqlite::Connection;
 fn create_tables(conn: &Connection) -> Result<()> {
     let users_schema = include_str!("../sql/users.sql");
     let sessions_schema = include_str!("../sql/sessions.sql");
-    let schema = format!("{}\n{}", users_schema, sessions_schema);
+    let areas_schema = include_str!("../sql/areas.sql");
+    let projects_schema = include_str!("../sql/projects.sql");
+    let schema = format!(
+        "{}\n{}\n{}\n{}",
+        users_schema, sessions_schema, areas_schema, projects_schema
+    );
 
     conn.execute_batch(&schema)?;
     Ok(())

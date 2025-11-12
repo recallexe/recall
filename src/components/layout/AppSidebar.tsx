@@ -42,9 +42,35 @@ async function tauriInvoke<T = any>(cmd: string, args?: any): Promise<T> {
   }
 }
 
+interface Area {
+  id: string;
+  name: string;
+  image_url?: string | null;
+  created_at: number;
+  updated_at: number;
+}
+
+interface Project {
+  id: string;
+  area_id: string;
+  area_name?: string | null;
+  title: string;
+  description?: string | null;
+  status: string;
+  priority?: string | null;
+  start_date?: number | null;
+  end_date?: number | null;
+  created_at: number;
+  updated_at: number;
+}
+
 export default function AppSidebar() {
   const pathname = usePathname();
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [areas, setAreas] = useState<Area[]>([]);
+  const [areasCount, setAreasCount] = useState<number>(0);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [projectsCount, setProjectsCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -57,7 +83,7 @@ export default function AppSidebar() {
         });
         const userInfo = responseJson && responseJson !== "null" ? JSON.parse(responseJson) : null;
 
-        if (userInfo && userInfo.id) {
+        if (userInfo?.id) {
           setUser({
             name: userInfo.name,
             email: userInfo.email,
@@ -71,7 +97,51 @@ export default function AppSidebar() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    const fetchAreas = async () => {
+      const token = localStorage.getItem("auth_token");
+      if (!token) return;
+
+      try {
+        const responseJson = await tauriInvoke<string>("get_areas", {
+          token,
+        });
+        const areasData = JSON.parse(responseJson);
+        setAreas(areasData);
+        setAreasCount(areasData.length);
+      } catch (err) {
+        console.error("Error fetching areas:", err);
+      }
+    };
+
+    const fetchProjects = async () => {
+      const token = localStorage.getItem("auth_token");
+      if (!token) return;
+
+      try {
+        const responseJson = await tauriInvoke<string>("get_projects", {
+          token,
+          area_id: null,
+        });
+        const projectsData = JSON.parse(responseJson);
+        setProjects(projectsData);
+        setProjectsCount(projectsData.length);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      }
+    };
+
+    fetchAreas();
+    fetchProjects();
+  }, []); // Fetch data on mount
+
   const getBadgeFor = (title: string): string | undefined => {
+    if (title.toLowerCase() === "areas") {
+      return areasCount > 0 ? String(areasCount) : undefined;
+    }
+    if (title.toLowerCase() === "projects") {
+      return projectsCount > 0 ? String(projectsCount) : undefined;
+    }
     const k = title.toLowerCase() as keyof typeof stats;
     const s = (stats as any)[k];
     return s && typeof s.value === "number" ? String(s.value) : undefined;
@@ -136,14 +206,23 @@ export default function AppSidebar() {
                   const badge = getBadgeFor(item.title);
 
                   if (hasSubmenu) {
-                    const subs =
-                      (sample as Record<string, string[]>)[item.key] || [];
+                    // For Areas and Projects, use real data
+                    let subs: string[] = [];
+                    if (item.key === "areas") {
+                      subs = areas.map((area) => area.name);
+                    } else if (item.key === "projects") {
+                      subs = projects.map((project) => project.title);
+                    } else {
+                      subs = (sample as Record<string, string[]>)[item.key] || [];
+                    }
                     const defaultOpen = pathname.startsWith(item.url);
                     return (
                       <CollapsibleMenuItem
                         key={item.title}
                         item={{ title: item.title, url: item.url, Icon }}
                         subs={subs}
+                        subsData={item.key === "areas" ? areas : undefined}
+                        projectsData={item.key === "projects" ? projects : undefined}
                         isActive={isActive}
                         badge={badge}
                         defaultOpen={defaultOpen}
@@ -305,12 +384,16 @@ function MenuItem({
 function CollapsibleMenuItem({
   item,
   subs,
+  subsData,
+  projectsData,
   isActive,
   badge,
   defaultOpen,
 }: {
   item: { title: string; url: string; Icon: React.ComponentType<any> };
   subs: string[];
+  subsData?: Area[];
+  projectsData?: Project[];
   isActive: boolean;
   badge?: string;
   defaultOpen: boolean;
@@ -389,28 +472,40 @@ function CollapsibleMenuItem({
 
         <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
           <SidebarMenuSub className="ml-0 pl-0 border-l-2 border-primary/20">
-            {subs.map((subItem, index) => (
-              <SidebarMenuSubItem
-                key={subItem}
-                className="animate-in fade-in slide-in-from-left-2"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <SidebarMenuSubButton
-                  asChild
-                  className="transition-all duration-200 bg-transparent hover:bg-sidebar-accent/50 hover:translate-x-1 ml-4"
+            {subs.map((subItem, index) => {
+              // If we have subsData (for areas), use the actual area ID for the link
+              const areaData = subsData?.find((a) => a.name === subItem);
+              // If we have projectsData, use the actual project ID for the link
+              const projectData = projectsData?.find((p) => p.title === subItem);
+              const href = areaData
+                ? `/dashboard/areas?area=${areaData.id}`
+                : projectData
+                  ? `/dashboard/projects`
+                  : "#";
+
+              return (
+                <SidebarMenuSubItem
+                  key={subItem}
+                  className="animate-in fade-in slide-in-from-left-2"
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
-                  <Link
-                    href="#"
-                    className="transition-all duration-200 group/sublink"
+                  <SidebarMenuSubButton
+                    asChild
+                    className="transition-all duration-200 bg-transparent hover:bg-sidebar-accent/50 hover:translate-x-1 ml-4"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover/sublink:bg-primary transition-all duration-200" />
-                    <span className="text-muted-foreground group-hover/sublink:text-foreground group-hover/sublink:translate-x-0.5 transition-all duration-200">
-                      {subItem}
-                    </span>
-                  </Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-            ))}
+                    <Link
+                      href={href}
+                      className="transition-all duration-200 group/sublink"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover/sublink:bg-primary transition-all duration-200" />
+                      <span className="text-muted-foreground group-hover/sublink:text-foreground group-hover/sublink:translate-x-0.5 transition-all duration-200">
+                        {subItem}
+                      </span>
+                    </Link>
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              );
+            })}
           </SidebarMenuSub>
         </CollapsibleContent>
       </SidebarMenuItem>

@@ -39,20 +39,41 @@ function isValidDate(date: Date | undefined) {
   if (!date) {
     return false;
   }
-  return !isNaN(date.getTime());
+  return !Number.isNaN(date.getTime());
+}
+
+interface DatePickerProps {
+  title: string;
+  value?: Date | undefined;
+  onChange?: (date: Date | undefined) => void;
 }
 
 /**
  * DatePicker component - Combines an input field with a calendar popover.
  * Allows users to select dates either by typing or using the calendar picker.
  */
-export function DatePicker({ title }: { title: string }) {
+export function DatePicker({ title, value: controlledValue, onChange }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState<Date | undefined>(
+  const [internalDate, setInternalDate] = React.useState<Date | undefined>(
     new Date("2025-06-01")
   );
-  const [month, setMonth] = React.useState<Date | undefined>(date);
+  const date = controlledValue !== undefined ? controlledValue : internalDate;
+  const setDate = (newDate: Date | undefined) => {
+    if (onChange) {
+      onChange(newDate);
+    } else {
+      setInternalDate(newDate);
+    }
+  };
+  const [month, setMonth] = React.useState<Date | undefined>(date || new Date());
   const [value, setValue] = React.useState(formatDate(date));
+
+  React.useEffect(() => {
+    setValue(formatDate(date));
+    if (date) {
+      setMonth(date);
+    }
+  }, [date]);
 
   return (
     <div className="flex flex-col gap-3">
