@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Recall
+
+A personal knowledge base built with [Tauri](https://tauri.app/) and [Next.js](https://nextjs.org/). Recall helps you organize your areas, projects, tasks, and resources in a beautiful, local-first desktop application.
+
+## Pre-built Releases
+
+You can download the pre-built releases from the [Releases](/releases) page. They may be labeled as "draft" but should run on the following platforms:
+
+- macOS (Arm64) with `.app` inside the `.tar.gz` (`.dmg` is not supported yet)
+
+```zsh
+# Extract the .tar.gz file
+tar -xzf recall.app.tar.gz
+
+# macOS is known to quarantine the app because I didn't spend $99 to get a developer account
+xattr -c recall.app
+
+# If it still doesn't open, you can try: (or switch to linux or windows)
+./recall.app/Contents/MacOS/recall
+```
+
+- Linux (x64) with `.AppImage`, `.deb`, and `.rpm`
+
+```bash
+# Ubuntu (other distros like Debian should work but I haven't tested them)
+sudo apt update
+sudo apt install ./recall_0.1.0_amd64.deb
+./recall
+```
+
+- Windows (x64) with `.msi`, and `.exe`.
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Backend**: Tauri 2 (Rust)
+- **Database**: SQLite with `rusqlite` and `exemplar`
+- **UI**: Tailwind CSS, Radix UI, Shadcn UI, Shadcn.io
+- **Editor**: TipTap (rich text editor)
+- **Package Manager**: Bun
+
+## Prerequisites
+
+- [Rust](https://www.rust-lang.org/tools/install) (latest stable version)
+- [Bun](https://bun.sh/) (MUST BE BUN v1.3 or higher)
+- System dependencies for Tauri:
+  - **macOS**: Xcode Command Line Tools
+  - **Linux**: `libwebkit2gtk-4.1-dev`, `libappindicator3-dev`, `librsvg2-dev`, `patchelf`
+  - **Windows**: Microsoft Visual Studio C++ Build Tools
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install Dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run the Tauri development server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bun run tauri dev
+```
 
-## Learn More
+This will:
 
-To learn more about Next.js, take a look at the following resources:
+- Start the Next.js development server on `http://localhost:3000`
+- Build and launch the Tauri application
+- Enable hot-reload for both frontend and backend changes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Building for Production
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Build the frontend:
 
-## Deploy on Vercel
+```bash
+bun run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Build the Tauri application:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+bun run tauri build
+```
+
+The built application will be in `src-tauri/target/release/bundle/`:
+
+- **macOS**: `.app` bundle inside the `.tar.gz`
+- **Windows**: `.msi` installer and `.exe` setup executable
+- **Linux**: `.AppImage`, `.deb`, and `.rpm` (only `.deb` was tested on Ubuntu)
+
+## Features
+
+- 🔐 **Authentication**: Username/password authentication with secure token management
+- 📁 **Areas**: Organize your work into different areas
+- 📋 **Projects**: Manage projects within areas with kanban-style boards
+- 📄 **Resources**: Store documents and files (text editor or file uploads)
+- 🎨 **Modern UI**: Beautiful, responsive interface built with Shadcn UI
+- 💾 **Local-First**: All data stored locally in SQLite database
+- 🔒 **Privacy**: No data leaves your device
+
+## Database
+
+The database file (`recall.db`) is stored locally in the application directory. Note that the database is not encrypted yet, so please be careful with your data. Final version will have some encryption but "never trust the client" principle applies because I can't guarantee someone in your household won't steal your data.
+
+## License
+
+Since this is purely a educational project, I'm not going to enforce any license.
+
+See the [Terms of Service](TERMS.md) for licensing information.
