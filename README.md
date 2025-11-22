@@ -92,6 +92,14 @@ The built application will be in `src-tauri/target/release/bundle/`:
 
 ## Features
 
+<!-- <img src="./public/signup.png" width="480" style="display:inline-block;">
+<img src="./public/signin.png" width="480" style="display:inline-block;"> -->
+
+| Signup                 | Signin                 | Dashboard              |
+|------------------------|------------------------|------------------------|
+| ![Signup](./public/signup.png) | ![Signin](./public/signin.png) | ![dashboard](./public/hero-dark.png)
+
+
 - 🔐 **Authentication**: Username/password authentication with secure token management
 - 📁 **Areas**: Organize your work into different areas
 - 📋 **Projects**: Manage projects within areas with kanban-style boards
