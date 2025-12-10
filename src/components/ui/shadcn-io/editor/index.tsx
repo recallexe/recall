@@ -1285,9 +1285,17 @@ export const EditorLinkSelector = ({
   open,
   onOpenChange,
 }: EditorLinkSelectorProps) => {
-  const [url, setUrl] = useState<string>('');
-  const inputReference = useRef<HTMLInputElement>(null);
   const { editor } = useCurrentEditor();
+  const inputReference = useRef<HTMLInputElement>(null);
+
+  // Get initial URL from editor attributes
+  const getInitialUrl = (): string => {
+    if (!editor) return '';
+    const href = (editor.getAttributes('link') as { href?: string }).href;
+    return href ?? '';
+  };
+
+  const [url, setUrl] = useState<string>(getInitialUrl());
 
   const isValidUrl = (text: string): boolean => {
     try {
@@ -1313,9 +1321,14 @@ export const EditorLinkSelector = ({
     }
   };
 
+  // Reset URL when popover opens
   useEffect(() => {
-    inputReference.current?.focus();
-  }, []);
+    if (open && editor) {
+      const href = (editor.getAttributes('link') as { href?: string }).href;
+      setUrl(href ?? '');
+      inputReference.current?.focus();
+    }
+  }, [open, editor]);
 
   if (!editor) {
     return null;
@@ -1331,8 +1344,6 @@ export const EditorLinkSelector = ({
       onOpenChange?.(false);
     }
   };
-
-  const defaultValue = (editor.getAttributes('link') as { href?: string }).href;
 
   return (
     <Popover modal onOpenChange={onOpenChange} open={open}>
@@ -1356,11 +1367,10 @@ export const EditorLinkSelector = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-60 p-0" sideOffset={10}>
-        <form className="flex p-1" onSubmit={handleSubmit}>
+        <form className="flex p-2 gap-2" onSubmit={handleSubmit}>
           <input
             aria-label="Link URL"
-            className="flex-1 bg-background p-1 text-sm outline-none"
-            defaultValue={defaultValue ?? ''}
+            className="flex-1 bg-background px-4 py-2.5 text-sm outline-none rounded-md border border-input focus:ring-2 focus:ring-ring focus:ring-offset-2"
             onChange={(event) => setUrl(event.target.value)}
             placeholder="Paste a link"
             ref={inputReference}
