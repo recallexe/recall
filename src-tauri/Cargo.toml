@@ -6,6 +6,7 @@ authors = ["us"]
 license = ""
 repository = ""
 edition = "2024"
+default-run = "recall"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -22,6 +23,10 @@ lto = true
 [lib]
 name = "recall_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "populate_data"
+path = "src/bin/populate_data.rs"
 
 [build-dependencies]
 tauri-build = { version = "2.5.1", features = [] }

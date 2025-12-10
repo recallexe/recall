@@ -1,5 +1,6 @@
 mod areas;
 mod auth;
+mod events;
 mod projects;
 mod resources;
 
@@ -138,7 +139,12 @@ pub fn run(pool: Pool<SqliteConnectionManager>) {
             resources::get_resource_by_id,
             resources::update_resource,
             resources::delete_resource,
-            resources::download_resource_file
+            resources::download_resource_file,
+            events::create_event,
+            events::get_events,
+            events::get_event_by_id,
+            events::update_event,
+            events::delete_event
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

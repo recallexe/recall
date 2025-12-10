@@ -54,9 +54,7 @@ interface DatePickerProps {
  */
 export function DatePicker({ title, value: controlledValue, onChange }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
-  const [internalDate, setInternalDate] = React.useState<Date | undefined>(
-    new Date("2025-06-01")
-  );
+  const [internalDate, setInternalDate] = React.useState<Date | undefined>(undefined);
   const date = controlledValue !== undefined ? controlledValue : internalDate;
   const setDate = (newDate: Date | undefined) => {
     if (onChange) {
@@ -66,7 +64,7 @@ export function DatePicker({ title, value: controlledValue, onChange }: DatePick
     }
   };
   const [month, setMonth] = React.useState<Date | undefined>(date || new Date());
-  const [value, setValue] = React.useState(formatDate(date));
+  const [value, setValue] = React.useState(() => formatDate(date));
 
   React.useEffect(() => {
     setValue(formatDate(date));
@@ -87,7 +85,7 @@ export function DatePicker({ title, value: controlledValue, onChange }: DatePick
         <Input
           id="date"
           value={value}
-          placeholder="June 01, 2025"
+          placeholder="Select a date"
           className="bg-background pr-10"
           onChange={(e) => {
             const date = new Date(e.target.value);

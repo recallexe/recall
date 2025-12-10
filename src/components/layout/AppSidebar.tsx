@@ -29,7 +29,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { NavUser } from "../ui/nav-user";
-import { menu, sample, stats } from "@/app/lib/data";
+import { menu, stats } from "@/app/lib/data";
 
 // Helper to safely invoke Tauri commands
 async function tauriInvoke<T = unknown>(cmd: string, args?: Record<string, unknown>): Promise<T> {
@@ -72,6 +72,7 @@ export default function AppSidebar() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [projectsCount, setProjectsCount] = useState<number>(0);
   const [resourcesCount, setResourcesCount] = useState<number>(0);
+  const [eventsCount, setEventsCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -160,9 +161,30 @@ export default function AppSidebar() {
       }
     };
 
+    const fetchEvents = async () => {
+      const token = localStorage.getItem("auth_token");
+      if (!token) return;
+
+      try {
+        const responseJson = await tauriInvoke<string>("get_events", {
+          token,
+          start_date: null,
+          end_date: null,
+          project_id: null,
+        });
+        const response = JSON.parse(responseJson);
+        if (response.success) {
+          setEventsCount((response.events || []).length);
+        }
+      } catch (err) {
+        console.error("Error fetching events:", err);
+      }
+    };
+
     fetchAreas();
     fetchProjects();
     fetchResources();
+    fetchEvents();
   }, []); // Fetch data on mount
 
   const getBadgeFor = (title: string): string | undefined => {
@@ -174,6 +196,9 @@ export default function AppSidebar() {
     }
     if (title.toLowerCase() === "resources") {
       return resourcesCount > 0 ? String(resourcesCount) : undefined;
+    }
+    if (title.toLowerCase() === "events") {
+      return eventsCount > 0 ? String(eventsCount) : undefined;
     }
     const k = title.toLowerCase() as keyof typeof stats;
     const s = stats[k as keyof typeof stats];
@@ -188,10 +213,10 @@ export default function AppSidebar() {
     "Projects",
     // "Tasks",
     // "Notes",
-    // "Events",
+    "Events",
   ];
   const libraryItems = ["Resources"];
-  // const moreItems = ["Calendar", "Archive"];
+  const moreItems = ["Calendar", "Archive"];
 
   return (
     <Sidebar variant="inset" collapsible="icon" className="bg-background">
@@ -246,7 +271,8 @@ export default function AppSidebar() {
                     } else if (item.key === "projects") {
                       subs = projects.map((project) => project.title);
                     } else {
-                      subs = (sample as Record<string, string[]>)[item.key] || [];
+                      // No sample data - use empty array for other menu items
+                      subs = [];
                     }
                     const defaultOpen = pathname.startsWith(item.url);
                     return (
@@ -308,35 +334,35 @@ export default function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* <SidebarSeparator className="my-2" /> */}
+        <SidebarSeparator className="my-2" />
 
         {/* MORE */}
-        {/* {moreItems.length > 0 && (
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-semibold tracking-wider">
-            More
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {menu
-                .filter((m) => moreItems.includes(m.title))
-                .map((item) => {
-                  const Icon = item.icon;
-                  const isActive = isActiveUrl(item.url);
-                  return (
-                    <MenuItem
-                      key={item.title}
-                      title={item.title}
-                      url={item.url}
-                      icon={Icon}
-                      isActive={isActive}
-                    />
-                  );
-                })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        )} */}
+        {moreItems.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-xs font-semibold tracking-wider">
+              More
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {menu
+                  .filter((m) => moreItems.includes(m.title))
+                  .map((item) => {
+                    const Icon = item.icon;
+                    const isActive = isActiveUrl(item.url);
+                    return (
+                      <MenuItem
+                        key={item.title}
+                        title={item.title}
+                        url={item.url}
+                        icon={Icon}
+                        isActive={isActive}
+                      />
+                    );
+                  })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
 
       {/* FOOTER */}

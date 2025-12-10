@@ -12,9 +12,15 @@ fn create_tables(conn: &Connection) -> Result<()> {
     let areas_schema = include_str!("../sql/areas.sql");
     let projects_schema = include_str!("../sql/projects.sql");
     let resources_schema = include_str!("../sql/resources.sql");
+    let events_schema = include_str!("../sql/events.sql");
     let schema = format!(
-        "{}\n{}\n{}\n{}\n{}",
-        users_schema, sessions_schema, areas_schema, projects_schema, resources_schema
+        "{}\n{}\n{}\n{}\n{}\n{}",
+        users_schema,
+        sessions_schema,
+        areas_schema,
+        projects_schema,
+        resources_schema,
+        events_schema
     );
 
     conn.execute_batch(&schema)?;

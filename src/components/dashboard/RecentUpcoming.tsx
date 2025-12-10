@@ -158,16 +158,21 @@ export default function RecentUpcoming() {
             <p className="text-sm text-muted-foreground">No {activeTab.toLowerCase()} found</p>
           </div>
         ) : (
-          currentData.map((item) => (
+          currentData.map((item, index) => (
             <div
               key={`${activeTab}-${item.title}-${item.date}`}
-              className="flex justify-between py-2 border-b last:border-none"
+              className="flex justify-between py-3 px-3 rounded-lg border border-transparent hover:border-blue-500/15 hover:bg-blue-500/5 dark:hover:bg-blue-500/3 bg-background/40 backdrop-blur-sm transition-all duration-200 group"
+              style={{
+                animationDelay: `${index * 50}ms`,
+              }}
             >
-              <Link href={item.url} className="flex items-center gap-2 hover:underline">
-                {item.icon}
-                <span className="text-sm">{item.title}</span>
+              <Link href={item.url} className="flex items-center gap-3 hover:underline flex-1 min-w-0">
+                <div className="p-1.5 rounded-md bg-background/80 dark:bg-background/60 group-hover:bg-blue-500/15 dark:group-hover:bg-blue-500/8 transition-colors">
+                  {item.icon}
+                </div>
+                <span className="text-sm font-medium truncate text-foreground">{item.title}</span>
               </Link>
-              <span className="text-muted-foreground text-sm">{item.date}</span>
+              <span className="text-foreground/70 dark:text-foreground/60 text-xs whitespace-nowrap ml-2 font-medium">{item.date}</span>
             </div>
           ))
         )}

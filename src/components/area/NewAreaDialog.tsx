@@ -44,6 +44,37 @@ export function NewAreaDialog({ trigger, onSuccess, area, open: controlledOpen, 
     const [imageUrl, setImageUrl] = React.useState(area?.image_url || "");
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
+    const [fetchingImage, setFetchingImage] = React.useState(false);
+
+    // Function to fetch image from free API based on area name
+    const fetchImageForArea = React.useCallback(async (areaName: string): Promise<string | null> => {
+        try {
+            setFetchingImage(true);
+            // Use Picsum Photos with a seed based on area name hash
+            // This provides consistent images for the same area name without API keys
+            const keywords = areaName.toLowerCase().trim();
+
+            // Create a simple hash from the area name for consistent seeding
+            let hash = 0;
+            for (let i = 0; i < keywords.length; i++) {
+                const char = keywords.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32-bit integer
+            }
+            const seed = Math.abs(hash);
+
+            // Use Picsum Photos with seed for consistent images
+            // Format: https://picsum.photos/seed/{seed}/400/400
+            const imageUrl = `https://picsum.photos/seed/${seed}/400/400`;
+
+            return imageUrl;
+        } catch (err) {
+            console.error("Error fetching image:", err);
+            return null;
+        } finally {
+            setFetchingImage(false);
+        }
+    }, []);
 
     React.useEffect(() => {
         if (open) {
@@ -65,9 +96,19 @@ export function NewAreaDialog({ trigger, onSuccess, area, open: controlledOpen, 
                 return;
             }
 
+            // Auto-fetch image if none provided (for both new and existing areas)
+            let finalImageUrl = imageUrl.trim() || null;
+            if (!finalImageUrl && name.trim()) {
+                const fetchedImage = await fetchImageForArea(name.trim());
+                if (fetchedImage) {
+                    finalImageUrl = fetchedImage;
+                    setImageUrl(fetchedImage);
+                }
+            }
+
             const request = {
                 name: name.trim(),
-                image_url: imageUrl.trim() || null,
+                image_url: finalImageUrl,
             };
 
             if (area) {
@@ -130,14 +171,27 @@ export function NewAreaDialog({ trigger, onSuccess, area, open: controlledOpen, 
                         </div>
 
                         <div className="grid gap-3">
-                            <Label htmlFor="image_url">Image URL (optional)</Label>
+                            <Label htmlFor="image_url">
+                                Image URL (optional)
+                                {name.trim() && !imageUrl && (
+                                    <span className="text-xs text-muted-foreground ml-2 font-normal">
+                                        Will auto-fetch if left empty
+                                    </span>
+                                )}
+                            </Label>
                             <Input
                                 id="image_url"
                                 value={imageUrl}
                                 onChange={(e) => setImageUrl(e.target.value)}
-                                placeholder="/personal.png"
-                                disabled={loading}
+                                placeholder="/personal.png or leave empty to auto-fetch"
+                                disabled={loading || fetchingImage}
                             />
+                            {fetchingImage && (
+                                <p className="text-xs text-muted-foreground flex items-center gap-2">
+                                    <Loader2 className="h-3 w-3 animate-spin" />
+                                    Generating image...
+                                </p>
+                            )}
                         </div>
 
                         {error && (
