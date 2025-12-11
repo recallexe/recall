@@ -99,6 +99,10 @@ The built application will be in `src-tauri/target/release/bundle/`:
 |------------------------|------------------------|------------------------|
 | ![Signup](./public/signup.png) | ![Signin](./public/signin.png) | ![dashboard](./public/hero-dark.png)
 
+| Areas                  | Projects               | Events                 | Calendar               |
+|------------------------|------------------------|------------------------|------------------------|
+| ![Areas](./public/new-areas.png) | ![Projects](./public/new-projects.png) | ![Events](./public/new-events.png) | ![Calendar](./public/new-cal.png)
+
 
 - 🔐 **Authentication**: Username/password authentication with secure token management
 - 📁 **Areas**: Organize your work into different areas
